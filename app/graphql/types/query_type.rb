@@ -20,11 +20,21 @@ module Types
       CategoryGroup.find(id)
     end
 
+    field :category_groups, [Types::CategoryGroupType], null: true
+    def category_groups
+      CategoryGroup.all
+    end
+
     field :category, Types::CategoryType, null: false do
       argument :id, ID, required: true
     end
     def category(id:)
       Category.find(id)
+    end
+
+    field :categories, [Types::CategoryType], null: true
+    def categories
+      Category.all
     end
   end
 end

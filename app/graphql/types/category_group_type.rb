@@ -5,5 +5,6 @@ module Types
   class CategoryGroupType < Types::BaseObject
     field :id, ID, null: false
     field :name, String, null: false
+    field :categories, [CategoryType], null: true
   end
 end
