@@ -48,5 +48,17 @@ module Types
     def accounts
       Account.all
     end
+
+    field :transaction, Types::TransactionType, null: false do
+      argument :id, ID, required: true
+    end
+    def transaction(id:)
+      Transaction.find(id)
+    end
+
+    field :transactions, [Types::TransactionType], null: false
+    def transactions
+      Transaction.all
+    end
   end
 end

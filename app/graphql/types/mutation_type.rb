@@ -6,5 +6,6 @@ module Types
     field :save_category_group, mutation: Mutations::SaveCategoryGroup
     field :save_category, mutation: Mutations::SaveCategory
     field :save_account, mutation: Mutations::SaveAccount
+    field :save_transaction, mutation: Mutations::SaveTransaction
   end
 end
