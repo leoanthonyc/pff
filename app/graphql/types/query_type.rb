@@ -36,5 +36,17 @@ module Types
     def categories
       Category.all
     end
+
+    field :account, Types::AccountType, null: false do
+      argument :id, ID, required: true
+    end
+    def account(id:)
+      Account.find(id)
+    end
+
+    field :accounts, [Types::AccountType], null: false
+    def accounts
+      Account.all
+    end
   end
 end
