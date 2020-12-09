@@ -4,9 +4,36 @@ import Categories from "../category/Categories";
 
 const CategoryGroup = ({ categoryGroup }) => {
   const [name, setName] = useState(categoryGroup.name);
+  const [editing, setEditing] = useState(false);
   return (
     <>
-      <h4>{name}</h4>
+      {editing ? (
+        <div>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <button type="button" onClick={() => setEditing(false)}>
+            Save
+          </button>
+          <button type="button" onClick={() => setEditing(false)}>
+            Delete
+          </button>
+          <button type="button" onClick={() => setEditing(false)}>
+            Cancel
+          </button>
+        </div>
+      ) : (
+        <div>
+          <div>
+            {name}
+            <button type="button" onClick={() => setEditing(true)}>
+              Edit
+            </button>
+          </div>
+        </div>
+      )}
       <Categories
         categoryGroupId={categoryGroup.id}
         categories={categoryGroup.categories}

@@ -20,7 +20,7 @@ const NewCategory = ({ categoryGroupId }) => {
         onChange={(e) => setName(e.target.value)}
       />
       <button type="submit" onClick={handleSave}>
-        save
+        Save
       </button>
     </div>
   );

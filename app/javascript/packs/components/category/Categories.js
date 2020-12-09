@@ -1,9 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import NewCategory from "./NewCategory";
 
 const Category = ({ category }) => {
-  return <div>{category.name}</div>;
+  const [name, setName] = useState(category.name);
+  const [editing, setEditing] = useState(false);
+
+  return (
+    <>
+      {editing ? (
+        <div>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <button type="button" onClick={() => setEditing(false)}>
+            Save
+          </button>
+          <button type="button" onClick={() => setEditing(false)}>
+            Delete
+          </button>
+          <button type="button" onClick={() => setEditing(false)}>
+            Cancel
+          </button>
+        </div>
+      ) : (
+        <div>
+          <div>
+            {name}
+            <button type="button" onClick={() => setEditing(true)}>
+              Edit
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
 };
 
 Category.propTypes = {
