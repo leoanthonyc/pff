@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { SAVE_CATEGORY_GROUP } from "../../api/useSaveCategoryGroupMutation";
+import { SAVE_CATEGORY_GROUP_MUTATION } from "../../api/categoryGroup";
 
 const NewCategoryGroup = () => {
   const [name, setName] = useState("");
-  const [saveCategoryGroup] = useMutation(SAVE_CATEGORY_GROUP);
+  const [saveCategoryGroup] = useMutation(SAVE_CATEGORY_GROUP_MUTATION);
 
   const handleSave = () => {
     saveCategoryGroup({ variables: { name } });
@@ -13,6 +13,7 @@ const NewCategoryGroup = () => {
 
   return (
     <div className="new-category-group">
+      <h3>New Category Group</h3>
       <input
         type="text"
         value={name}

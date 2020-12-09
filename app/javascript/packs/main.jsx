@@ -5,13 +5,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import { ApolloProvider } from "@apollo/client";
+import { client } from "./api/apolloClient"
 import Pff from './components/pff'
 
 const App = ({ title }) => (
-  <>
+  <ApolloProvider client={client}>
     <h1>{title}!</h1>
     <Pff />
-  </>
+  </ApolloProvider>
 )
 
 App.defaultProps = {
