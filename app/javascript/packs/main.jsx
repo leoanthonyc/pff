@@ -5,22 +5,26 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import Pff from './components/pff'
 
-const Header = ({ title }) => (
-  <h1>{title}!</h1>
+const App = ({ title }) => (
+  <>
+    <h1>{title}!</h1>
+    <Pff />
+  </>
 )
 
-Header.defaultProps = {
+App.defaultProps = {
   title: 'Title'
 }
 
-Header.propTypes = {
+App.propTypes = {
   title: PropTypes.string
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <Header title="Pff" />,
+    <App title="Pff" />,
     document.body.appendChild(document.createElement('div')),
   )
 })
