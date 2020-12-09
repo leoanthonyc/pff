@@ -1,0 +1,26 @@
+// Run this example by adding <%= javascript_pack_tag 'hello_react' %> to the head of your layout file,
+// like app/views/layouts/application.html.erb. All it does is render <div>Hello React</div> at the bottom
+// of the page.
+
+import React from 'react'
+import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
+
+const Header = ({ title }) => (
+  <h1>{title}!</h1>
+)
+
+Header.defaultProps = {
+  title: 'Title'
+}
+
+Header.propTypes = {
+  title: PropTypes.string
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  ReactDOM.render(
+    <Header title="Pff" />,
+    document.body.appendChild(document.createElement('div')),
+  )
+})
