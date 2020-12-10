@@ -22,3 +22,11 @@ export const SAVE_CATEGORY_MUTATION = gql`
     }
   }
 `;
+
+export const DELETE_CATEGORY_MUTATION = gql`
+  mutation DeleteCategory($id: ID) {
+    deleteCategory(input: { id: $id }) {
+      success
+    }
+  }
+`;

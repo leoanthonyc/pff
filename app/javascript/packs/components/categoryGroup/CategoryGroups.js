@@ -1,10 +1,20 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { useMutation } from "@apollo/client";
+import { DELETE_CATEGORY_GROUP_MUTATION } from "../../api/categoryGroup";
 import Categories from "../category/Categories";
 
 const CategoryGroup = ({ categoryGroup }) => {
   const [name, setName] = useState(categoryGroup.name);
   const [editing, setEditing] = useState(false);
+  const [deleteCategoryGroup] = useMutation(DELETE_CATEGORY_GROUP_MUTATION);
+
+  const handleDelete = () => {
+    deleteCategoryGroup({ variables: { id: categoryGroup.id } }).then(() =>
+      setEditing(false)
+    );
+  };
+
   return (
     <>
       {editing ? (
@@ -17,7 +27,7 @@ const CategoryGroup = ({ categoryGroup }) => {
           <button type="button" onClick={() => setEditing(false)}>
             Save
           </button>
-          <button type="button" onClick={() => setEditing(false)}>
+          <button type="button" onClick={() => handleDelete()}>
             Delete
           </button>
           <button type="button" onClick={() => setEditing(false)}>
