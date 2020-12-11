@@ -1,10 +1,29 @@
 import React, { useState } from "react";
-import { useMutation } from "@apollo/client";
+import { useMutation, gql } from "@apollo/client";
 import { SAVE_CATEGORY_GROUP_MUTATION } from "../../api/categoryGroup";
 
 const NewCategoryGroup = () => {
   const [name, setName] = useState("");
-  const [saveCategoryGroup] = useMutation(SAVE_CATEGORY_GROUP_MUTATION);
+  const [saveCategoryGroup] = useMutation(SAVE_CATEGORY_GROUP_MUTATION, {
+    update(cache, { data: { saveCategoryGroup } }) {
+      cache.modify({
+        fields: {
+          categoryGroups(existingCategoryGroups = []) {
+            const newCategoryGroup = cache.writeFragment({
+              data: saveCategoryGroup.categoryGroup,
+              fragment: gql`
+                fragment NewCategoryGroup on CategoryGroup {
+                  id
+                  name
+                }
+              `,
+            });
+            return [...existingCategoryGroups, newCategoryGroup];
+          },
+        },
+      });
+    },
+  });
 
   const handleSave = () => {
     saveCategoryGroup({ variables: { name } });

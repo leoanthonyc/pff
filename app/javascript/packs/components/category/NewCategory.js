@@ -1,14 +1,33 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { useMutation } from "@apollo/client";
+import { useMutation, gql } from "@apollo/client";
 import { SAVE_CATEGORY_MUTATION } from "../../api/category";
 
 const NewCategory = ({ categoryGroupId }) => {
   const [name, setName] = useState("");
-  const [saveCategory] = useMutation(SAVE_CATEGORY_MUTATION);
+  const [saveCategory] = useMutation(SAVE_CATEGORY_MUTATION, {
+    update(cache, { data: { saveCategory } }) {
+      cache.modify({
+        fields: {
+          categoryGroups() {
+            cache.writeFragment({
+              data: saveCategory.category,
+              fragment: gql`
+                fragment NewCategory on Category {
+                  id
+                  name
+                }
+              `,
+            });
+          },
+        },
+      });
+    },
+  });
 
   const handleSave = () => {
     saveCategory({ variables: { categoryGroupId, name, budget: 0 } });
+    setName("");
   };
 
   return (
