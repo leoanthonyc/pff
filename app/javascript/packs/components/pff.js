@@ -1,18 +1,39 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Dashboard from "./dashboard";
+import Accounts from "./account/Accounts";
 import CategoryGroups from "./categoryGroup/CategoryGroups";
-import NewCategoryGroup from "./categoryGroup/NewCategoryGroup";
-import { useQuery } from "@apollo/client";
-import { CATEGORY_GROUPS_QUERY } from "../api/categoryGroup";
 
 const Pff = () => {
-  const { data, loading, error } = useQuery(CATEGORY_GROUPS_QUERY);
-  if (loading) return <p>Loading categories...</p>;
-  if (error) return <p>Error :(</p>;
   return (
-    <div>
-      <NewCategoryGroup />
-      <CategoryGroups categoryGroups={data.categoryGroups} />
-    </div>
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/categories">Categories</Link>
+            </li>
+            <li>
+              <Link to="/accounts">Accounts</Link>
+            </li>
+          </ul>
+        </nav>
+        <Switch>
+          <Route path="/categories">
+            <CategoryGroups />
+          </Route>
+          <Route path="/accounts">
+            <Accounts />
+          </Route>
+          <Route path="/">
+            <Dashboard />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 };
 

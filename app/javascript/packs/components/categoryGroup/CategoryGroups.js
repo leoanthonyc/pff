@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { useMutation } from "@apollo/client";
-import { DELETE_CATEGORY_GROUP_MUTATION } from "../../api/categoryGroup";
+import { useQuery, useMutation } from "@apollo/client";
+import {
+  CATEGORY_GROUPS_QUERY,
+  DELETE_CATEGORY_GROUP_MUTATION,
+} from "../../api/categoryGroup";
 import Categories from "../category/Categories";
+import NewCategoryGroup from "./NewCategoryGroup";
 
 const CategoryGroup = ({ categoryGroup }) => {
   const [name, setName] = useState(categoryGroup.name);
@@ -49,7 +53,7 @@ const CategoryGroup = ({ categoryGroup }) => {
       ) : (
         <div>
           <div>
-            {name}
+            <strong>{name}</strong>
             <button type="button" onClick={() => setEditing(true)}>
               Edit
             </button>
@@ -70,20 +74,19 @@ CategoryGroup.propTypes = {
   }).isRequired,
 };
 
-const CategoryGroups = ({ categoryGroups }) => {
+const CategoryGroups = () => {
+  const { data, loading, error } = useQuery(CATEGORY_GROUPS_QUERY);
+  if (loading) return <p>Loading categories...</p>;
+  if (error) return <p>Error :(</p>;
+
   return (
     <div>
-      {categoryGroups.map((categoryGroup) => (
+      <NewCategoryGroup />
+      {(data.categoryGroups || []).map((categoryGroup) => (
         <CategoryGroup key={categoryGroup.id} categoryGroup={categoryGroup} />
       ))}
     </div>
   );
-};
-
-CategoryGroups.propTypes = {
-  categoryGroups: PropTypes.arrayOf(
-    PropTypes.shape({ name: PropTypes.string.isRequired })
-  ).isRequired,
 };
 
 export default CategoryGroups;
