@@ -7,7 +7,20 @@ import NewCategory from "./NewCategory";
 const Category = ({ category }) => {
   const [name, setName] = useState(category.name);
   const [editing, setEditing] = useState(false);
-  const [deleteCategory] = useMutation(DELETE_CATEGORY_MUTATION);
+  const [deleteCategory] = useMutation(DELETE_CATEGORY_MUTATION, {
+    update(cache) {
+      cache.modify({
+        id: cache.identify(category.categoryGroup),
+        fields: {
+          categories(existingCategories = [], { readField }) {
+            return existingCategories.filter(
+              (ref) => readField("id", ref) !== category.id
+            );
+          },
+        },
+      });
+    },
+  });
 
   const handleDelete = () => {
     deleteCategory({ variables: { id: category.id } }).then(() =>

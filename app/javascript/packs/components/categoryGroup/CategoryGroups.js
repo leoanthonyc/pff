@@ -7,7 +7,19 @@ import Categories from "../category/Categories";
 const CategoryGroup = ({ categoryGroup }) => {
   const [name, setName] = useState(categoryGroup.name);
   const [editing, setEditing] = useState(false);
-  const [deleteCategoryGroup] = useMutation(DELETE_CATEGORY_GROUP_MUTATION);
+  const [deleteCategoryGroup] = useMutation(DELETE_CATEGORY_GROUP_MUTATION, {
+    update(cache) {
+      cache.modify({
+        fields: {
+          categoryGroups(existingCategoryGroups = [], { readField }) {
+            return existingCategoryGroups.filter(
+              (ref) => readField("id", ref) !== categoryGroup.id
+            );
+          },
+        },
+      });
+    },
+  });
 
   const handleDelete = () => {
     deleteCategoryGroup({ variables: { id: categoryGroup.id } }).then(() =>
