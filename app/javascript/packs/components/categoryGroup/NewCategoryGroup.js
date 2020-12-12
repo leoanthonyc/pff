@@ -32,7 +32,7 @@ const NewCategoryGroup = () => {
 
   return (
     <div className="new-category-group">
-      <h3>New Category Group</h3>
+      <h3>Add New Category Group</h3>
       <input
         type="text"
         value={name}
