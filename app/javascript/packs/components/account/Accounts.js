@@ -4,7 +4,11 @@ import { useQuery } from "@apollo/client";
 import { ACCOUNTS_QUERY } from "../../api/account";
 
 const Account = ({ account }) => {
-  return <div>{account.name}</div>;
+  return (
+    <div>
+      <strong>{account.name}</strong>
+    </div>
+  );
 };
 
 Account.propTypes = {
