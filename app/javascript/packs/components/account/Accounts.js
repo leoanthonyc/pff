@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useQuery } from "@apollo/client";
 import { ACCOUNTS_QUERY } from "../../api/account";
+import NewAccount from "./NewAccount";
 
 const Account = ({ account }) => {
   return (
@@ -25,6 +26,7 @@ const Accounts = () => {
   return (
     <div>
       <h2>Accounts</h2>
+      <NewAccount />
       {(data.accounts || []).map((account) => (
         <Account key={account.id} account={account} />
       ))}

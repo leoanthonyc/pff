@@ -38,7 +38,7 @@ const NewCategory = ({ categoryGroupId }) => {
         placeholder="new category"
         onChange={(e) => setName(e.target.value)}
       />
-      <button type="submit" onClick={handleSave}>
+      <button type="button" onClick={handleSave}>
         Save
       </button>
     </div>
