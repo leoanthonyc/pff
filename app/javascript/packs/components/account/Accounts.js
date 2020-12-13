@@ -1,14 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { useQuery } from "@apollo/client";
-import { ACCOUNTS_QUERY } from "../../api/account";
+import { useMutation, useQuery } from "@apollo/client";
+import { ACCOUNTS_QUERY, SAVE_ACCOUNT_MUTATION } from "../../api/account";
 import NewAccount from "./NewAccount";
 
 const Account = ({ account }) => {
+  const [name, setName] = useState(account.name);
+  const [editing, setEditing] = useState(false);
+  const [saveAccount] = useMutation(SAVE_ACCOUNT_MUTATION);
+
+  const handleSave = () => {
+    saveAccount({ variables: { id: account.id, name: name } });
+    setEditing(false);
+  };
   return (
-    <div>
-      <strong>{account.name}</strong>
-    </div>
+    <>
+      {editing ? (
+        <div>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <button type="button" onClick={() => handleSave()}>
+            Save
+          </button>
+          <button type="button" onClick={() => setEditing(false)}>
+            Delete
+          </button>
+          <button type="button" onClick={() => setEditing(false)}>
+            Cancel
+          </button>
+        </div>
+      ) : (
+        <div>
+          <div>
+            <strong>{name}</strong>
+            <button type="button" onClick={() => setEditing(true)}>
+              Edit
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

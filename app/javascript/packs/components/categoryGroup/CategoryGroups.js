@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useQuery, useMutation } from "@apollo/client";
 import {
   CATEGORY_GROUPS_QUERY,
+  SAVE_CATEGORY_GROUP_MUTATION,
   DELETE_CATEGORY_GROUP_MUTATION,
 } from "../../api/categoryGroup";
 import Categories from "../category/Categories";
@@ -11,6 +12,7 @@ import NewCategoryGroup from "./NewCategoryGroup";
 const CategoryGroup = ({ categoryGroup }) => {
   const [name, setName] = useState(categoryGroup.name);
   const [editing, setEditing] = useState(false);
+  const [saveCategoryGroup] = useMutation(SAVE_CATEGORY_GROUP_MUTATION);
   const [deleteCategoryGroup] = useMutation(DELETE_CATEGORY_GROUP_MUTATION, {
     update(cache) {
       cache.modify({
@@ -25,10 +27,14 @@ const CategoryGroup = ({ categoryGroup }) => {
     },
   });
 
-  const handleDelete = () => {
-    deleteCategoryGroup({ variables: { id: categoryGroup.id } }).then(() =>
-      setEditing(false)
-    );
+  const handleDelete = async () => {
+    deleteCategoryGroup({ variables: { id: categoryGroup.id } });
+    setEditing(false);
+  };
+
+  const handleSave = async () => {
+    saveCategoryGroup({ variables: { id: categoryGroup.id, name: name } });
+    setEditing(false);
   };
 
   return (
@@ -40,7 +46,7 @@ const CategoryGroup = ({ categoryGroup }) => {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <button type="button" onClick={() => setEditing(false)}>
+          <button type="button" onClick={() => handleSave()}>
             Save
           </button>
           <button type="button" onClick={() => handleDelete()}>
