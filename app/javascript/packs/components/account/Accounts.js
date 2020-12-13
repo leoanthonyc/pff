@@ -1,16 +1,38 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useMutation, useQuery } from "@apollo/client";
-import { ACCOUNTS_QUERY, SAVE_ACCOUNT_MUTATION } from "../../api/account";
+import {
+  ACCOUNTS_QUERY,
+  SAVE_ACCOUNT_MUTATION,
+  DELETE_ACCOUNT_MUTATION,
+} from "../../api/account";
 import NewAccount from "./NewAccount";
 
 const Account = ({ account }) => {
   const [name, setName] = useState(account.name);
   const [editing, setEditing] = useState(false);
   const [saveAccount] = useMutation(SAVE_ACCOUNT_MUTATION);
+  const [deleteAccount] = useMutation(DELETE_ACCOUNT_MUTATION, {
+    update(cache) {
+      cache.modify({
+        fields: {
+          accounts(existingAccounts = [], { readField }) {
+            return existingAccounts.filter(
+              (ref) => readField("id", ref) !== account.id
+            );
+          },
+        },
+      });
+    },
+  });
 
-  const handleSave = () => {
-    saveAccount({ variables: { id: account.id, name: name } });
+  const handleDelete = async () => {
+    await deleteAccount({ variables: { id: account.id } });
+    setEditing(false);
+  };
+
+  const handleSave = async () => {
+    await saveAccount({ variables: { id: account.id, name: name } });
     setEditing(false);
   };
   return (
@@ -25,7 +47,7 @@ const Account = ({ account }) => {
           <button type="button" onClick={() => handleSave()}>
             Save
           </button>
-          <button type="button" onClick={() => setEditing(false)}>
+          <button type="button" onClick={() => handleDelete()}>
             Delete
           </button>
           <button type="button" onClick={() => setEditing(false)}>
