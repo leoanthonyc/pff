@@ -11,5 +11,6 @@ module Types
     field :delete_category_group, mutation: Mutations::DeleteCategoryGroup
     field :delete_category, mutation: Mutations::DeleteCategory
     field :delete_account, mutation: Mutations::DeleteAccount
+    field :delete_transaction, mutation: Mutations::DeleteTransaction
   end
 end
