@@ -1,9 +1,13 @@
-import React, { useState } from "react";
-import { gql, useMutation } from "@apollo/client";
+import React, { useEffect, useState } from "react";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { SAVE_TRANSACTION_MUTATION } from "../../api/transaction";
+import { CATEGORY_GROUPS_QUERY } from "../../api/categoryGroup";
 
 const NewTransaction = () => {
   const [name, setName] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const { data } = useQuery(CATEGORY_GROUPS_QUERY);
+
   const [saveTransaction] = useMutation(SAVE_TRANSACTION_MUTATION, {
     update(cache, { data: { saveTransaction } }) {
       cache.modify({
@@ -37,12 +41,16 @@ const NewTransaction = () => {
     await saveTransaction({
       variables: {
         name,
+        categoryId,
         accountId: 1,
-        categoryId: 1,
       },
     });
     setName("");
   };
+
+  useEffect(() => {
+    setCategoryId(data?.categoryGroups[0].categories[0].id);
+  }, [data?.categoryGroups]);
 
   return (
     <div>
@@ -52,6 +60,23 @@ const NewTransaction = () => {
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
+      <label htmlFor="category">Category</label>
+      <select
+        value={categoryId}
+        onChange={(e) => setCategoryId(e.target.value)}
+      >
+        {(data?.categoryGroups || []).map((categoryGroup) => {
+          return (
+            <optgroup key={categoryGroup.id || ""} label={categoryGroup.name}>
+              {categoryGroup.categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </optgroup>
+          );
+        })}
+      </select>
       <button type="button" onClick={() => handleSave()}>
         Save
       </button>
