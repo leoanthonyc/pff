@@ -5,11 +5,14 @@ import {
   SAVE_TRANSACTION_MUTATION,
   TRANSACTIONS_QUERY,
 } from "../../api/transaction";
+import { CATEGORY_GROUPS_QUERY } from "../../api/categoryGroup";
 import NewTransaction from "./NewTransaction";
 
 const Transaction = ({ transaction }) => {
   const [name, setName] = useState(transaction.name);
+  const [categoryId, setCategoryId] = useState(transaction.category.id);
   const [editing, setEditing] = useState(false);
+  const { data } = useQuery(CATEGORY_GROUPS_QUERY);
   const [saveTransaction] = useMutation(SAVE_TRANSACTION_MUTATION);
   const [deleteTransaction] = useMutation(DELETE_TRANSACTION_MUTATION, {
     update(cache) {
@@ -35,7 +38,7 @@ const Transaction = ({ transaction }) => {
       variables: {
         id: transaction.id,
         name: name,
-        categoryId: transaction.category.id,
+        categoryId: categoryId,
         accountId: transaction.account.id,
       },
     });
@@ -50,6 +53,26 @@ const Transaction = ({ transaction }) => {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
+          <label htmlFor="category">Category</label>
+          <select
+            value={categoryId}
+            onChange={(e) => setCategoryId(e.target.value)}
+          >
+            {(data?.categoryGroups || []).map((categoryGroup) => {
+              return (
+                <optgroup
+                  key={categoryGroup.id || ""}
+                  label={categoryGroup.name}
+                >
+                  {categoryGroup.categories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </optgroup>
+              );
+            })}
+          </select>
           <button type="button" onClick={() => handleSave()}>
             Save
           </button>
