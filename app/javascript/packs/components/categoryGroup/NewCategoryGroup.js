@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation, gql } from "@apollo/client";
-import { SAVE_CATEGORY_GROUP_MUTATION } from "../../api/categoryGroup";
+import { SAVE_CATEGORY_GROUP_MUTATION } from "../../graphql/CategoryGroup";
 
 const NewCategoryGroup = () => {
   const [name, setName] = useState("");

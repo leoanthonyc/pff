@@ -5,7 +5,7 @@ import {
   CATEGORY_GROUPS_QUERY,
   SAVE_CATEGORY_GROUP_MUTATION,
   DELETE_CATEGORY_GROUP_MUTATION,
-} from "../../api/categoryGroup";
+} from "../../graphql/CategoryGroup";
 import Categories from "../category/Categories";
 import NewCategoryGroup from "./NewCategoryGroup";
 

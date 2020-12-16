@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation, gql } from "@apollo/client";
-import { SAVE_ACCOUNT_MUTATION } from "../../api/account";
+import { SAVE_ACCOUNT_MUTATION } from "../../graphql/Account";
 
 const NewAccount = () => {
   const [name, setName] = useState("");

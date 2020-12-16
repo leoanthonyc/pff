@@ -2,31 +2,31 @@
 // like app/views/layouts/application.html.erb. All it does is render <div>Hello React</div> at the bottom
 // of the page.
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
+import React from "react";
+import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
 import { ApolloProvider } from "@apollo/client";
-import { client } from "./api/apolloClient"
-import Pff from './components/pff'
+import { client } from "./utils/apolloClient";
+import Pff from "./components/pff";
 
 const App = ({ title }) => (
   <ApolloProvider client={client}>
     <h1>{title}!</h1>
     <Pff />
   </ApolloProvider>
-)
+);
 
 App.defaultProps = {
-  title: 'Title'
-}
+  title: "Title",
+};
 
 App.propTypes = {
-  title: PropTypes.string
-}
+  title: PropTypes.string,
+};
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
     <App title="Pff" />,
-    document.body.appendChild(document.createElement('div')),
-  )
-})
+    document.body.appendChild(document.createElement("div"))
+  );
+});

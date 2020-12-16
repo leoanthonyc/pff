@@ -5,7 +5,7 @@ import {
   ACCOUNTS_QUERY,
   SAVE_ACCOUNT_MUTATION,
   DELETE_ACCOUNT_MUTATION,
-} from "../../api/account";
+} from "../../graphql/Account";
 import NewAccount from "./NewAccount";
 
 const Account = ({ account }) => {

@@ -4,15 +4,18 @@ import {
   DELETE_TRANSACTION_MUTATION,
   SAVE_TRANSACTION_MUTATION,
   TRANSACTIONS_QUERY,
-} from "../../api/transaction";
-import { CATEGORY_GROUPS_QUERY } from "../../api/categoryGroup";
+} from "../../graphql/Transaction";
+import { CATEGORY_GROUPS_QUERY } from "../../graphql/CategoryGroup";
+import useAccountsQuery from "../../utils/useAccountsQuery";
 import NewTransaction from "./NewTransaction";
 
 const Transaction = ({ transaction }) => {
   const [name, setName] = useState(transaction.name);
   const [categoryId, setCategoryId] = useState(transaction.category.id);
+  const [accountId, setAccountId] = useState(transaction.account.id);
   const [editing, setEditing] = useState(false);
   const { data } = useQuery(CATEGORY_GROUPS_QUERY);
+  const { accounts } = useAccountsQuery();
   const [saveTransaction] = useMutation(SAVE_TRANSACTION_MUTATION);
   const [deleteTransaction] = useMutation(DELETE_TRANSACTION_MUTATION, {
     update(cache) {
@@ -37,9 +40,9 @@ const Transaction = ({ transaction }) => {
     await saveTransaction({
       variables: {
         id: transaction.id,
-        name: name,
-        categoryId: categoryId,
-        accountId: transaction.account.id,
+        name,
+        categoryId,
+        accountId,
       },
     });
     setEditing(false);
@@ -53,6 +56,19 @@ const Transaction = ({ transaction }) => {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
+          <label htmlFor="account">Account</label>
+          <select
+            value={accountId}
+            onChange={(e) => setAccountId(e.target.value)}
+          >
+            {accounts.map((account) => {
+              return (
+                <option key={account.id} value={account.id}>
+                  {account.name}
+                </option>
+              );
+            })}
+          </select>
           <label htmlFor="category">Category</label>
           <select
             value={categoryId}

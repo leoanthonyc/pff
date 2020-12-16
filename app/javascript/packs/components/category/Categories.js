@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/client";
 import {
   SAVE_CATEGORY_MUTATION,
   DELETE_CATEGORY_MUTATION,
-} from "../../api/category";
+} from "../../graphql/Category";
 import NewCategory from "./NewCategory";
 
 const Category = ({ category, categoryGroupId }) => {

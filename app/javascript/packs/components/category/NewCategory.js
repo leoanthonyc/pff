@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useMutation, gql } from "@apollo/client";
-import { SAVE_CATEGORY_MUTATION } from "../../api/category";
+import { SAVE_CATEGORY_MUTATION } from "../../graphql/Category";
 
 const NewCategory = ({ categoryGroupId }) => {
   const [name, setName] = useState("");
