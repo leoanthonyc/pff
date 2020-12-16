@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { SAVE_TRANSACTION_MUTATION } from "../../graphql/Transaction";
-import { CATEGORY_GROUPS_QUERY } from "../../graphql/CategoryGroup";
 import useAccountsQuery from "../../utils/useAccountsQuery";
+import useCategoryGroupsQuery from "../../utils/useCategoryGroupsQuery";
 
 const NewTransaction = () => {
   const [name, setName] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [accountId, setAccountId] = useState("");
-  const { data } = useQuery(CATEGORY_GROUPS_QUERY);
+  const { categoryGroups } = useCategoryGroupsQuery();
   const { accounts } = useAccountsQuery();
 
   const [saveTransaction] = useMutation(SAVE_TRANSACTION_MUTATION, {
@@ -52,8 +52,8 @@ const NewTransaction = () => {
   };
 
   useEffect(() => {
-    setCategoryId(data?.categoryGroups[0].categories[0].id);
-  }, [data?.categoryGroups]);
+    setCategoryId(categoryGroups[0]?.categories[0].id);
+  }, [categoryGroups]);
 
   useEffect(() => {
     setAccountId(accounts[0]?.id);
@@ -82,7 +82,7 @@ const NewTransaction = () => {
         value={categoryId}
         onChange={(e) => setCategoryId(e.target.value)}
       >
-        {(data?.categoryGroups || []).map((categoryGroup) => {
+        {categoryGroups.map((categoryGroup) => {
           return (
             <optgroup key={categoryGroup.id || ""} label={categoryGroup.name}>
               {categoryGroup.categories.map((category) => (

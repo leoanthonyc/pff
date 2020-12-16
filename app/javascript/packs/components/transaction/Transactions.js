@@ -5,8 +5,8 @@ import {
   SAVE_TRANSACTION_MUTATION,
   TRANSACTIONS_QUERY,
 } from "../../graphql/Transaction";
-import { CATEGORY_GROUPS_QUERY } from "../../graphql/CategoryGroup";
 import useAccountsQuery from "../../utils/useAccountsQuery";
+import useCategoryGroupsQuery from "../../utils/useCategoryGroupsQuery";
 import NewTransaction from "./NewTransaction";
 
 const Transaction = ({ transaction }) => {
@@ -14,8 +14,8 @@ const Transaction = ({ transaction }) => {
   const [categoryId, setCategoryId] = useState(transaction.category.id);
   const [accountId, setAccountId] = useState(transaction.account.id);
   const [editing, setEditing] = useState(false);
-  const { data } = useQuery(CATEGORY_GROUPS_QUERY);
   const { accounts } = useAccountsQuery();
+  const { categoryGroups } = useCategoryGroupsQuery();
   const [saveTransaction] = useMutation(SAVE_TRANSACTION_MUTATION);
   const [deleteTransaction] = useMutation(DELETE_TRANSACTION_MUTATION, {
     update(cache) {
@@ -74,7 +74,7 @@ const Transaction = ({ transaction }) => {
             value={categoryId}
             onChange={(e) => setCategoryId(e.target.value)}
           >
-            {(data?.categoryGroups || []).map((categoryGroup) => {
+            {categoryGroups.map((categoryGroup) => {
               return (
                 <optgroup
                   key={categoryGroup.id || ""}
