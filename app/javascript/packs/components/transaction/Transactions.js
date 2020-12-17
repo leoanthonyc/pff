@@ -50,64 +50,80 @@ const Transaction = ({ transaction }) => {
   return (
     <>
       {editing ? (
-        <div>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <label htmlFor="account">Account</label>
-          <select
-            value={accountId}
-            onChange={(e) => setAccountId(e.target.value)}
-          >
-            {accounts.map((account) => {
-              return (
-                <option key={account.id} value={account.id}>
-                  {account.name}
-                </option>
-              );
-            })}
-          </select>
-          <label htmlFor="category">Category</label>
-          <select
-            value={categoryId}
-            onChange={(e) => setCategoryId(e.target.value)}
-          >
-            {categoryGroups.map((categoryGroup) => {
-              return (
-                <optgroup
-                  key={categoryGroup.id || ""}
-                  label={categoryGroup.name}
-                >
-                  {categoryGroup.categories.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </optgroup>
-              );
-            })}
-          </select>
-          <button type="button" onClick={() => handleSave()}>
-            Save
-          </button>
-          <button type="button" onClick={() => handleDelete()}>
-            Delete
-          </button>
-          <button type="button" onClick={() => setEditing(false)}>
-            Cancel
-          </button>
-        </div>
-      ) : (
-        <div>
-          <div>
-            <strong>{name}</strong>
-            <button type="button" onClick={() => setEditing(true)}>
-              Edit
+        <tr>
+          <td>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </td>
+          <td>
+            <select
+              value={accountId}
+              onChange={(e) => setAccountId(e.target.value)}
+            >
+              {accounts.map((account) => {
+                return (
+                  <option key={account.id} value={account.id}>
+                    {account.name}
+                  </option>
+                );
+              })}
+            </select>
+          </td>
+          <td>
+            <select
+              value={categoryId}
+              onChange={(e) => setCategoryId(e.target.value)}
+            >
+              {categoryGroups.map((categoryGroup) => {
+                return (
+                  <optgroup
+                    key={categoryGroup.id || ""}
+                    label={categoryGroup.name}
+                  >
+                    {categoryGroup.categories.map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </optgroup>
+                );
+              })}
+            </select>
+          </td>
+          <td>
+            <input type="number" />
+          </td>
+          <td>
+            <button type="button" onClick={() => handleSave()}>
+              Save
             </button>
-          </div>
-        </div>
+            <button type="button" onClick={() => handleDelete()}>
+              Delete
+            </button>
+            <button type="button" onClick={() => setEditing(false)}>
+              Cancel
+            </button>
+          </td>
+        </tr>
+      ) : (
+        <>
+          <tr>
+            <td>
+              <strong>{name}</strong>
+            </td>
+            <td>{transaction.account.name}</td>
+            <td>{transaction.category.name}</td>
+            <td>{transaction.value || 0}</td>
+            <td>
+              <button type="button" onClick={() => setEditing(true)}>
+                Edit
+              </button>
+            </td>
+          </tr>
+        </>
       )}
     </>
   );
@@ -124,9 +140,22 @@ const Transactions = () => {
   return (
     <div>
       <NewTransaction />
-      {transactions.map((transaction) => (
-        <Transaction key={transaction.id} transaction={transaction} />
-      ))}
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Account</th>
+            <th>Category</th>
+            <th>Value</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {transactions.map((transaction) => (
+            <Transaction key={transaction.id} transaction={transaction} />
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
