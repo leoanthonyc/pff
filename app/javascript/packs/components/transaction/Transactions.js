@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { useQuery, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import {
   DELETE_TRANSACTION_MUTATION,
   SAVE_TRANSACTION_MUTATION,
-  TRANSACTIONS_QUERY,
 } from "../../graphql/Transaction";
 import useAccountsQuery from "../../utils/useAccountsQuery";
 import useCategoryGroupsQuery from "../../utils/useCategoryGroupsQuery";
 import NewTransaction from "./NewTransaction";
+import useTransactionsQuery from "../../utils/useTransactionsQuery";
 
 const Transaction = ({ transaction }) => {
   const [name, setName] = useState(transaction.name);
@@ -114,13 +114,17 @@ const Transaction = ({ transaction }) => {
 };
 
 const Transactions = () => {
-  const { data, error, loading } = useQuery(TRANSACTIONS_QUERY);
-  if (error) return <div> Error loading transactions :( </div>;
-  if (loading) return <div> Loading transactions ... </div>;
+  const {
+    transactions,
+    transactionsError,
+    transactionsLoading,
+  } = useTransactionsQuery();
+  if (transactionsError) return <div> Error loading transactions :( </div>;
+  if (transactionsLoading) return <div> Loading transactions ... </div>;
   return (
     <div>
       <NewTransaction />
-      {(data.transactions || []).map((transaction) => (
+      {transactions.map((transaction) => (
         <Transaction key={transaction.id} transaction={transaction} />
       ))}
     </div>
