@@ -6,6 +6,7 @@ import useCategoryGroupsQuery from "../../utils/useCategoryGroupsQuery";
 
 const NewTransaction = () => {
   const [name, setName] = useState("");
+  const [value, setValue] = useState(0);
   const [categoryId, setCategoryId] = useState("");
   const [accountId, setAccountId] = useState("");
   const { categoryGroups } = useCategoryGroupsQuery();
@@ -22,6 +23,7 @@ const NewTransaction = () => {
                 fragment NewTransaction on Transaction {
                   id
                   name
+                  value
                   account {
                     id
                     name
@@ -44,6 +46,7 @@ const NewTransaction = () => {
     await saveTransaction({
       variables: {
         name,
+        value,
         categoryId,
         accountId,
       },
@@ -60,44 +63,59 @@ const NewTransaction = () => {
   }, [accounts]);
 
   return (
-    <div>
-      <strong>New Transaction </strong>
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <label htmlFor="account">Account</label>
-      <select value={accountId} onChange={(e) => setAccountId(e.target.value)}>
-        {accounts.map((account) => {
-          return (
-            <option key={account.id} value={account.id}>
-              {account.name}
-            </option>
-          );
-        })}
-      </select>
-      <label htmlFor="category">Category</label>
-      <select
-        value={categoryId}
-        onChange={(e) => setCategoryId(e.target.value)}
-      >
-        {categoryGroups.map((categoryGroup) => {
-          return (
-            <optgroup key={categoryGroup.id || ""} label={categoryGroup.name}>
-              {categoryGroup.categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </optgroup>
-          );
-        })}
-      </select>
-      <button type="button" onClick={() => handleSave()}>
-        Save
-      </button>
-    </div>
+    <tr>
+      <td>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </td>
+      <td>
+        <select
+          value={accountId}
+          onChange={(e) => setAccountId(e.target.value)}
+        >
+          {accounts.map((account) => {
+            return (
+              <option key={account.id} value={account.id}>
+                {account.name}
+              </option>
+            );
+          })}
+        </select>
+      </td>
+      <td>
+        <select
+          value={categoryId}
+          onChange={(e) => setCategoryId(e.target.value)}
+        >
+          {categoryGroups.map((categoryGroup) => {
+            return (
+              <optgroup key={categoryGroup.id || ""} label={categoryGroup.name}>
+                {categoryGroup.categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </optgroup>
+            );
+          })}
+        </select>
+      </td>
+      <td>
+        <input
+          type="number"
+          value={value}
+          onChange={(e) => setValue(+e.target.value)}
+        />
+      </td>
+      <td>
+        <button type="button" onClick={() => handleSave()}>
+          Save
+        </button>
+      </td>
+    </tr>
   );
 };
 

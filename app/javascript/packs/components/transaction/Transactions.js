@@ -11,6 +11,7 @@ import useTransactionsQuery from "../../utils/useTransactionsQuery";
 
 const Transaction = ({ transaction }) => {
   const [name, setName] = useState(transaction.name);
+  const [value, setValue] = useState(transaction.value);
   const [categoryId, setCategoryId] = useState(transaction.category.id);
   const [accountId, setAccountId] = useState(transaction.account.id);
   const [editing, setEditing] = useState(false);
@@ -39,10 +40,11 @@ const Transaction = ({ transaction }) => {
   const handleSave = async () => {
     await saveTransaction({
       variables: {
-        id: transaction.id,
         name,
+        value,
         categoryId,
         accountId,
+        id: transaction.id,
       },
     });
     setEditing(false);
@@ -94,7 +96,11 @@ const Transaction = ({ transaction }) => {
             </select>
           </td>
           <td>
-            <input type="number" />
+            <input
+              type="number"
+              value={value}
+              onChange={(e) => setValue(+e.target.value)}
+            />
           </td>
           <td>
             <button type="button" onClick={() => handleSave()}>
@@ -111,9 +117,7 @@ const Transaction = ({ transaction }) => {
       ) : (
         <>
           <tr>
-            <td>
-              <strong>{name}</strong>
-            </td>
+            <td>{name}</td>
             <td>{transaction.account.name}</td>
             <td>{transaction.category.name}</td>
             <td>{transaction.value || 0}</td>
@@ -130,6 +134,7 @@ const Transaction = ({ transaction }) => {
 };
 
 const Transactions = () => {
+  const [newEntry, setNewEntry] = useState(false);
   const {
     transactions,
     transactionsError,
@@ -139,7 +144,11 @@ const Transactions = () => {
   if (transactionsLoading) return <div> Loading transactions ... </div>;
   return (
     <div>
-      <NewTransaction />
+      <div>
+        <button type="button" onClick={() => setNewEntry(true)}>
+          New Transaction
+        </button>
+      </div>
       <table>
         <thead>
           <tr>
@@ -151,6 +160,7 @@ const Transactions = () => {
           </tr>
         </thead>
         <tbody>
+          {newEntry && <NewTransaction />}
           {transactions.map((transaction) => (
             <Transaction key={transaction.id} transaction={transaction} />
           ))}

@@ -5,6 +5,7 @@ export const TRANSACTIONS_QUERY = gql`
     transactions {
       id
       name
+      value
       category {
         id
         name
@@ -21,6 +22,7 @@ export const SAVE_TRANSACTION_MUTATION = gql`
   mutation SaveTransaction(
     $id: ID
     $name: String!
+    $value: Int
     $categoryId: ID!
     $accountId: ID!
   ) {
@@ -28,6 +30,7 @@ export const SAVE_TRANSACTION_MUTATION = gql`
       input: {
         id: $id
         name: $name
+        value: $value
         categoryId: $categoryId
         accountId: $accountId
       }
@@ -35,6 +38,7 @@ export const SAVE_TRANSACTION_MUTATION = gql`
       transaction {
         id
         name
+        value
         category {
           id
           name
