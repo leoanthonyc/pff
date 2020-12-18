@@ -4,7 +4,7 @@ import { SAVE_TRANSACTION_MUTATION } from "../../graphql/Transaction";
 import useAccountsQuery from "../../utils/useAccountsQuery";
 import useCategoryGroupsQuery from "../../utils/useCategoryGroupsQuery";
 
-const NewTransaction = () => {
+const NewTransaction = ({ onClose }) => {
   const [name, setName] = useState("");
   const [value, setValue] = useState(0);
   const [categoryId, setCategoryId] = useState("");
@@ -52,6 +52,7 @@ const NewTransaction = () => {
       },
     });
     setName("");
+    onClose();
   };
 
   useEffect(() => {
@@ -113,6 +114,9 @@ const NewTransaction = () => {
       <td>
         <button type="button" onClick={() => handleSave()}>
           Save
+        </button>
+        <button type="button" onClick={() => onClose()}>
+          Cancel
         </button>
       </td>
     </tr>

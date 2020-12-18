@@ -160,7 +160,7 @@ const Transactions = () => {
           </tr>
         </thead>
         <tbody>
-          {newEntry && <NewTransaction />}
+          {newEntry && <NewTransaction onClose={() => setNewEntry(false)} />}
           {transactions.map((transaction) => (
             <Transaction key={transaction.id} transaction={transaction} />
           ))}
