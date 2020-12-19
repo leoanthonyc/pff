@@ -31,17 +31,22 @@ const NewCategory = ({ categoryGroupId }) => {
   };
 
   return (
-    <div className="new-category">
-      <input
-        type="text"
-        value={name}
-        placeholder="new category"
-        onChange={(e) => setName(e.target.value)}
-      />
-      <button type="button" onClick={handleSave}>
-        Save
-      </button>
-    </div>
+    <tr>
+      <td>
+        <input
+          type="text"
+          value={name}
+          placeholder="new category"
+          onChange={(e) => setName(e.target.value)}
+        />
+      </td>
+      <td></td>
+      <td>
+        <button type="button" onClick={handleSave}>
+          Save
+        </button>
+      </td>
+    </tr>
   );
 };
 
