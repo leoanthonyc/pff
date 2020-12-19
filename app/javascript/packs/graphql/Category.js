@@ -18,6 +18,7 @@ export const SAVE_CATEGORY_MUTATION = gql`
       category {
         id
         name
+        budget
       }
     }
   }

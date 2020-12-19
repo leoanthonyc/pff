@@ -9,6 +9,7 @@ import NewCategory from "./NewCategory";
 
 const Category = ({ category, categoryGroupId }) => {
   const [name, setName] = useState(category.name);
+  const [budget, setBudget] = useState(category.budget);
   const [editing, setEditing] = useState(false);
   const [saveCategory] = useMutation(SAVE_CATEGORY_MUTATION);
   const [deleteCategory] = useMutation(DELETE_CATEGORY_MUTATION, {
@@ -34,9 +35,9 @@ const Category = ({ category, categoryGroupId }) => {
   const handleSave = async () => {
     await saveCategory({
       variables: {
+        name,
+        budget,
         id: category.id,
-        name: name,
-        budget: 0,
         categoryGroupId: categoryGroupId,
       },
     });
@@ -46,31 +47,43 @@ const Category = ({ category, categoryGroupId }) => {
   return (
     <>
       {editing ? (
-        <div>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <button type="button" onClick={() => handleSave()}>
-            Save
-          </button>
-          <button type="button" onClick={() => handleDelete()}>
-            Delete
-          </button>
-          <button type="button" onClick={() => setEditing(false)}>
-            Cancel
-          </button>
-        </div>
+        <tr>
+          <td>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              value={budget}
+              onChange={(e) => setBudget(+e.target.value)}
+            />
+          </td>
+          <td>
+            <button type="button" onClick={() => handleSave()}>
+              Save
+            </button>
+            <button type="button" onClick={() => handleDelete()}>
+              Delete
+            </button>
+            <button type="button" onClick={() => setEditing(false)}>
+              Cancel
+            </button>
+          </td>
+        </tr>
       ) : (
-        <div>
-          <div>
-            {name}
+        <tr>
+          <td>{name}</td>
+          <td>{budget}</td>
+          <td>
             <button type="button" onClick={() => setEditing(true)}>
               Edit
             </button>
-          </div>
-        </div>
+          </td>
+        </tr>
       )}
     </>
   );
@@ -85,7 +98,7 @@ Category.propTypes = {
 
 const Categories = ({ categoryGroupId, categories }) => {
   return (
-    <div>
+    <>
       {categories.map((category) => (
         <Category
           key={category.id}
@@ -94,7 +107,7 @@ const Categories = ({ categoryGroupId, categories }) => {
         />
       ))}
       <NewCategory categoryGroupId={categoryGroupId} />
-    </div>
+    </>
   );
 };
 

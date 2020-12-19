@@ -8,6 +8,7 @@ export const CATEGORY_GROUPS_QUERY = gql`
       categories {
         id
         name
+        budget
         categoryGroup {
           id
         }

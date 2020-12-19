@@ -40,31 +40,39 @@ const CategoryGroup = ({ categoryGroup }) => {
   return (
     <>
       {editing ? (
-        <div>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <button type="button" onClick={() => handleSave()}>
-            Save
-          </button>
-          <button type="button" onClick={() => handleDelete()}>
-            Delete
-          </button>
-          <button type="button" onClick={() => setEditing(false)}>
-            Cancel
-          </button>
-        </div>
+        <tr>
+          <td>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </td>
+          <td>0</td>
+          <td>
+            <button type="button" onClick={() => handleSave()}>
+              Save
+            </button>
+            <button type="button" onClick={() => handleDelete()}>
+              Delete
+            </button>
+            <button type="button" onClick={() => setEditing(false)}>
+              Cancel
+            </button>
+          </td>
+        </tr>
       ) : (
-        <div>
-          <div>
+        <tr>
+          <td>
             <strong>{name}</strong>
+          </td>
+          <td>0</td>
+          <td>
             <button type="button" onClick={() => setEditing(true)}>
               Edit
             </button>
-          </div>
-        </div>
+          </td>
+        </tr>
       )}
       <Categories
         categoryGroupId={categoryGroup.id}
@@ -88,9 +96,23 @@ const CategoryGroups = () => {
   return (
     <div>
       <NewCategoryGroup />
-      {(data.categoryGroups || []).map((categoryGroup) => (
-        <CategoryGroup key={categoryGroup.id} categoryGroup={categoryGroup} />
-      ))}
+      <table>
+        <thead>
+          <tr>
+            <th> Name</th>
+            <th> Budgeted</th>
+            <th> Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {(data.categoryGroups || []).map((categoryGroup) => (
+            <CategoryGroup
+              key={categoryGroup.id}
+              categoryGroup={categoryGroup}
+            />
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
