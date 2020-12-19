@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { useQuery, useMutation } from "@apollo/client";
 import {
@@ -37,6 +37,12 @@ const CategoryGroup = ({ categoryGroup }) => {
     setEditing(false);
   };
 
+  const totalBudgeted = useMemo(() => {
+    return categoryGroup.categories
+      .map((c) => c.budget)
+      .reduce((acc, cv) => (acc = acc + cv), 0);
+  }, [categoryGroup]);
+
   return (
     <>
       {editing ? (
@@ -48,7 +54,7 @@ const CategoryGroup = ({ categoryGroup }) => {
               onChange={(e) => setName(e.target.value)}
             />
           </td>
-          <td>0</td>
+          <td>{totalBudgeted}</td>
           <td>
             <button type="button" onClick={() => handleSave()}>
               Save
@@ -66,7 +72,7 @@ const CategoryGroup = ({ categoryGroup }) => {
           <td>
             <strong>{name}</strong>
           </td>
-          <td>0</td>
+          <td>{totalBudgeted}</td>
           <td>
             <button type="button" onClick={() => setEditing(true)}>
               Edit

@@ -106,7 +106,9 @@ const Categories = ({ categoryGroupId, categories }) => {
           categoryGroupId={categoryGroupId}
         />
       ))}
-      <NewCategory categoryGroupId={categoryGroupId} />
+      <tr>
+        <NewCategory categoryGroupId={categoryGroupId} />
+      </tr>
     </>
   );
 };
