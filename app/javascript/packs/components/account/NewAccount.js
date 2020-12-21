@@ -4,6 +4,7 @@ import { SAVE_ACCOUNT_MUTATION } from "../../graphql/Account";
 
 const NewAccount = () => {
   const [name, setName] = useState("");
+  const [value, setValue] = useState(0);
   const [saveAccount] = useMutation(SAVE_ACCOUNT_MUTATION, {
     update(cache, { data: { saveAccount } }) {
       cache.modify({
@@ -15,6 +16,7 @@ const NewAccount = () => {
                 fragment NewAccount on Account {
                   id
                   name
+                  value
                 }
               `,
             });
@@ -26,8 +28,9 @@ const NewAccount = () => {
   });
 
   const handleSave = () => {
-    saveAccount({ variables: { name } });
+    saveAccount({ variables: { name, value } });
     setName("");
+    setValue(0);
   };
 
   return (
@@ -36,6 +39,11 @@ const NewAccount = () => {
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
+      />
+      <input
+        type="number"
+        value={value}
+        onChange={(e) => setValue(+e.target.value)}
       />
       <button type="button" onClick={handleSave}>
         Save

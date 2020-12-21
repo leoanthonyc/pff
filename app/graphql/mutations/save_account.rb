@@ -7,16 +7,18 @@ module Mutations
 
     argument :id, ID, required: false
     argument :name, String, required: true
+    argument :value, Integer, required: true
 
     field :account, Types::AccountType, null: false
 
-    def resolve(id: nil, name:)
+    def resolve(id: nil, name:, value:)
       account = if id
                   Account.find(id)
                 else
                   Account.new
                 end
       account.name = name
+      account.value = value
       account.save!
       { account: account }
     end

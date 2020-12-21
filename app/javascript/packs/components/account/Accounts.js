@@ -10,6 +10,7 @@ import NewAccount from "./NewAccount";
 
 const Account = ({ account }) => {
   const [name, setName] = useState(account.name);
+  const [value, setValue] = useState(account.value);
   const [editing, setEditing] = useState(false);
   const [saveAccount] = useMutation(SAVE_ACCOUNT_MUTATION);
   const [deleteAccount] = useMutation(DELETE_ACCOUNT_MUTATION, {
@@ -32,7 +33,7 @@ const Account = ({ account }) => {
   };
 
   const handleSave = async () => {
-    await saveAccount({ variables: { id: account.id, name: name } });
+    await saveAccount({ variables: { id: account.id, name, value } });
     setEditing(false);
   };
   return (
@@ -43,6 +44,11 @@ const Account = ({ account }) => {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            type="number"
+            value={value}
+            onChange={(e) => setValue(+e.target.value)}
           />
           <button type="button" onClick={() => handleSave()}>
             Save
@@ -58,6 +64,7 @@ const Account = ({ account }) => {
         <div>
           <div>
             <strong>{name}</strong>
+            {value}
             <button type="button" onClick={() => setEditing(true)}>
               Edit
             </button>
