@@ -7,6 +7,7 @@ import {
   DELETE_ACCOUNT_MUTATION,
 } from "../../graphql/Account";
 import NewAccount from "./NewAccount";
+import NewTransaction from "../transaction/NewTransaction";
 
 const Account = ({ account }) => {
   const [name, setName] = useState(account.name);
@@ -37,41 +38,47 @@ const Account = ({ account }) => {
     setEditing(false);
   };
   return (
-    <>
+    <tr>
       {editing ? (
-        <div>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            type="number"
-            value={value}
-            onChange={(e) => setValue(+e.target.value)}
-          />
-          <button type="button" onClick={() => handleSave()}>
-            Save
-          </button>
-          <button type="button" onClick={() => handleDelete()}>
-            Delete
-          </button>
-          <button type="button" onClick={() => setEditing(false)}>
-            Cancel
-          </button>
-        </div>
+        <>
+          <td>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              value={value}
+              onChange={(e) => setValue(+e.target.value)}
+            />
+          </td>
+          <td>
+            <button type="button" onClick={() => handleSave()}>
+              Save
+            </button>
+            <button type="button" onClick={() => handleDelete()}>
+              Delete
+            </button>
+            <button type="button" onClick={() => setEditing(false)}>
+              Cancel
+            </button>
+          </td>
+        </>
       ) : (
-        <div>
-          <div>
-            <strong>{name}</strong>
-            {value}
+        <>
+          <td>{name}</td>
+          <td>{value}</td>
+          <td>
             <button type="button" onClick={() => setEditing(true)}>
               Edit
             </button>
-          </div>
-        </div>
+          </td>
+        </>
       )}
-    </>
+    </tr>
   );
 };
 
@@ -84,15 +91,32 @@ Account.propTypes = {
 
 const Accounts = () => {
   const { data, error, loading } = useQuery(ACCOUNTS_QUERY);
+  const [newAccount, setNewAccount] = useState(false);
   if (error) return <div>Error loading accounts :( </div>;
   if (loading) return <div> Loading accounts ... </div>;
   return (
     <div>
       <h2>Accounts</h2>
-      <NewAccount />
-      {(data.accounts || []).map((account) => (
-        <Account key={account.id} account={account} />
-      ))}
+      <div>
+        <button type="button" onClick={() => setNewAccount(true)}>
+          New Account
+        </button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Account</th>
+            <th>Initial Amount</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {newAccount && <NewAccount onClose={() => setNewAccount(false)} />}
+          {(data.accounts || []).map((account) => (
+            <Account key={account.id} account={account} />
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

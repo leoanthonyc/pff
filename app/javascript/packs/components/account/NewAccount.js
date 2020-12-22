@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { useMutation, gql } from "@apollo/client";
 import { SAVE_ACCOUNT_MUTATION } from "../../graphql/Account";
 
-const NewAccount = () => {
+const NewAccount = ({ onClose }) => {
   const [name, setName] = useState("");
   const [value, setValue] = useState(0);
   const [saveAccount] = useMutation(SAVE_ACCOUNT_MUTATION, {
@@ -31,25 +32,44 @@ const NewAccount = () => {
     saveAccount({ variables: { name, value } });
     setName("");
     setValue(0);
+    onClose();
   };
 
   return (
-    <div className="new-account">
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        type="number"
-        value={value}
-        onChange={(e) => setValue(+e.target.value)}
-      />
-      <button type="button" onClick={handleSave}>
-        Save
-      </button>
-    </div>
+    <tr>
+      <td>
+        <input
+          type="text"
+          value={name}
+          placeholder="new account"
+          onChange={(e) => setName(e.target.value)}
+        />
+      </td>
+      <td>
+        <input
+          type="number"
+          value={value}
+          onChange={(e) => setValue(+e.target.value)}
+        />
+      </td>
+      <td>
+        <button type="button" onClick={handleSave}>
+          Save
+        </button>
+        <button type="button" onClick={onClose}>
+          Cancel
+        </button>
+      </td>
+    </tr>
   );
+};
+
+NewAccount.propTypes = {
+  onClose: PropTypes.func.isRequired,
+};
+
+NewAccount.defaultProps = {
+  onClose: () => {},
 };
 
 export default NewAccount;
