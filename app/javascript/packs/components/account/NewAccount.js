@@ -1,32 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { useMutation, gql } from "@apollo/client";
-import { SAVE_ACCOUNT_MUTATION } from "../../graphql/Account";
+import useSaveAccountMutation from "../../utils/useSaveAccountMutation";
 
 const NewAccount = ({ onClose }) => {
   const [name, setName] = useState("");
   const [value, setValue] = useState(0);
-  const [saveAccount] = useMutation(SAVE_ACCOUNT_MUTATION, {
-    update(cache, { data: { saveAccount } }) {
-      cache.modify({
-        fields: {
-          accounts(existingAccounts = []) {
-            const newAccount = cache.writeFragment({
-              data: saveAccount.account,
-              fragment: gql`
-                fragment NewAccount on Account {
-                  id
-                  name
-                  value
-                }
-              `,
-            });
-            return [...existingAccounts, newAccount];
-          },
-        },
-      });
-    },
-  });
+  const { saveAccount } = useSaveAccountMutation();
 
   const handleSave = () => {
     saveAccount({ variables: { name, value } });
