@@ -4,6 +4,7 @@ import useSaveCategoryMutation from "../../utils/useSaveCategoryMutation";
 
 const NewCategory = ({ categoryGroupId }) => {
   const [name, setName] = useState("");
+  const [value, setValue] = useState(0);
   const { saveCategory } = useSaveCategoryMutation();
 
   const handleSave = () => {
@@ -21,7 +22,13 @@ const NewCategory = ({ categoryGroupId }) => {
           onChange={(e) => setName(e.target.value)}
         />
       </td>
-      <td></td>
+      <td>
+        <input
+          type="number"
+          value={value}
+          onChange={(e) => setValue(+e.target.value)}
+        />
+      </td>
       <td>
         <button type="button" onClick={handleSave}>
           Save
