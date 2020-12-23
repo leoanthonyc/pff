@@ -52,9 +52,9 @@ const Transaction = ({ transaction }) => {
     setEditing(false);
   };
   return (
-    <>
+    <tr className="border-t border-b border-dotted">
       {editing ? (
-        <tr>
+        <>
           <td>
             <input
               type="text"
@@ -122,24 +122,22 @@ const Transaction = ({ transaction }) => {
               Cancel
             </button>
           </td>
-        </tr>
+        </>
       ) : (
         <>
-          <tr>
-            <td>{name}</td>
-            <td>{payee}</td>
-            <td>{transaction.account.name}</td>
-            <td>{transaction.category.name}</td>
-            <td>{transaction.value || 0}</td>
-            <td>
-              <button type="button" onClick={() => setEditing(true)}>
-                Edit
-              </button>
-            </td>
-          </tr>
+          <td>{name}</td>
+          <td>{payee}</td>
+          <td>{transaction.account.name}</td>
+          <td>{transaction.category.name}</td>
+          <td>{transaction.value || 0}</td>
+          <td>
+            <button type="button" onClick={() => setEditing(true)}>
+              Edit
+            </button>
+          </td>
         </>
       )}
-    </>
+    </tr>
   );
 };
 
@@ -154,7 +152,7 @@ const Transactions = () => {
   if (transactionsLoading) return <div> Loading transactions ... </div>;
   return (
     <div>
-      <div>
+      <div className="pb-4">
         <button
           className="rounded-lg p-2 text-gray-100 hover:text-white bg-green-500 font-semibold shadow-md"
           type="button"
@@ -163,8 +161,8 @@ const Transactions = () => {
           New Transaction
         </button>
       </div>
-      <table className="table-auto">
-        <thead>
+      <table className="table-auto w-full shadow-lg text-left">
+        <thead className="bg-gray-200">
           <tr>
             <th>Name</th>
             <th>Payee</th>

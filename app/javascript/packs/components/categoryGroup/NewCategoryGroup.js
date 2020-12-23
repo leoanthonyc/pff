@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useMutation, gql } from "@apollo/client";
 import { SAVE_CATEGORY_GROUP_MUTATION } from "../../graphql/CategoryGroup";
 
-const NewCategoryGroup = () => {
+const NewCategoryGroup = ({ onClose }) => {
   const [name, setName] = useState("");
   const [saveCategoryGroup] = useMutation(SAVE_CATEGORY_GROUP_MUTATION, {
     update(cache, { data: { saveCategoryGroup } }) {
@@ -28,20 +28,26 @@ const NewCategoryGroup = () => {
   const handleSave = () => {
     saveCategoryGroup({ variables: { name } });
     setName("");
+    onClose();
   };
 
   return (
-    <div className="new-category-group">
-      <input
-        type="text"
-        value={name}
-        placeholder={"new category group"}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <button type="submit" onClick={handleSave}>
-        Save
-      </button>
-    </div>
+    <tr className="border-t border-b border-dotted">
+      <td>
+        <input
+          type="text"
+          value={name}
+          placeholder={"new category group"}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </td>
+      <td></td>
+      <td>
+        <button type="submit" onClick={handleSave}>
+          Save
+        </button>
+      </td>
+    </tr>
   );
 };
 

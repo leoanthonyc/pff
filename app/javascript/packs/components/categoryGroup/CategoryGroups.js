@@ -46,7 +46,7 @@ const CategoryGroup = ({ categoryGroup }) => {
   return (
     <>
       {editing ? (
-        <tr>
+        <tr className="bg-gray-100 border-t border-b border-dotted">
           <td>
             <input
               type="text"
@@ -68,7 +68,7 @@ const CategoryGroup = ({ categoryGroup }) => {
           </td>
         </tr>
       ) : (
-        <tr>
+        <tr className="bg-gray-100 border-t border-b border-dotted">
           <td>
             <strong>{name}</strong>
           </td>
@@ -95,15 +95,24 @@ CategoryGroup.propTypes = {
 };
 
 const CategoryGroups = () => {
+  const [newEntry, setNewEntry] = useState(false);
   const { data, loading, error } = useQuery(CATEGORY_GROUPS_QUERY);
   if (loading) return <p>Loading categories...</p>;
   if (error) return <p>Error :(</p>;
 
   return (
     <div>
-      <NewCategoryGroup />
-      <table>
-        <thead>
+      <div className="pb-4">
+        <button
+          className="rounded-lg p-2 text-gray-100 hover:text-white bg-blue-500 font-semibold shadow-md"
+          type="button"
+          onClick={() => setNewEntry(true)}
+        >
+          New Category Group
+        </button>
+      </div>
+      <table className="table-auto w-full shadow-lg text-left">
+        <thead className="bg-gray-200">
           <tr>
             <th> Name</th>
             <th> Budgeted</th>
@@ -111,6 +120,7 @@ const CategoryGroups = () => {
           </tr>
         </thead>
         <tbody>
+          {newEntry && <NewCategoryGroup onClose={() => setNewEntry(false)} />}
           {(data.categoryGroups || []).map((categoryGroup) => (
             <CategoryGroup
               key={categoryGroup.id}

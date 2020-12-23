@@ -45,9 +45,9 @@ const Category = ({ category, categoryGroupId }) => {
   };
 
   return (
-    <>
+    <tr className="border-t border-b border-dotted">
       {editing ? (
-        <tr>
+        <>
           <td>
             <input
               type="text"
@@ -73,9 +73,9 @@ const Category = ({ category, categoryGroupId }) => {
               Cancel
             </button>
           </td>
-        </tr>
+        </>
       ) : (
-        <tr>
+        <>
           <td>{name}</td>
           <td>{budget}</td>
           <td>
@@ -83,9 +83,9 @@ const Category = ({ category, categoryGroupId }) => {
               Edit
             </button>
           </td>
-        </tr>
+        </>
       )}
-    </>
+    </tr>
   );
 };
 

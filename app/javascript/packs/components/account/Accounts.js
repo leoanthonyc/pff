@@ -38,7 +38,7 @@ const Account = ({ account }) => {
     setEditing(false);
   };
   return (
-    <tr>
+    <tr className="border-t border-b border-dotted">
       {editing ? (
         <>
           <td>
@@ -96,13 +96,17 @@ const Accounts = () => {
   if (loading) return <div> Loading accounts ... </div>;
   return (
     <div>
-      <div>
-        <button type="button" onClick={() => setNewAccount(true)}>
+      <div className="pb-4">
+        <button
+          className="rounded-lg p-2 text-gray-100 hover:text-white bg-gray-500 font-semibold shadow-md"
+          type="button"
+          onClick={() => setNewAccount(true)}
+        >
           New Account
         </button>
       </div>
-      <table>
-        <thead>
+      <table className="table-auto w-full shadow-lg text-left">
+        <thead className="bg-gray-200">
           <tr>
             <th>Account</th>
             <th>Initial Amount</th>

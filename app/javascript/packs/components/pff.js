@@ -13,7 +13,7 @@ const Pff = () => {
   return (
     <Router>
       <div className="flex">
-        <div className="flex-initial text-gray-400">
+        <div className="flex-initial text-gray-400 p-6">
           <nav>
             <ul>
               <li className="text-lg hover:text-black">
@@ -34,7 +34,7 @@ const Pff = () => {
             </ul>
           </nav>
         </div>
-        <div className="flex-1">
+        <div className="flex-1 p-6">
           <Switch>
             <Route path="/categories">
               <CategoryGroups />

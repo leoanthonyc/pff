@@ -39,7 +39,7 @@ const NewTransaction = ({ onClose }) => {
   }, [accounts]);
 
   return (
-    <tr>
+    <tr className="border-t border-b border-dotted">
       <td>
         <input
           type="text"

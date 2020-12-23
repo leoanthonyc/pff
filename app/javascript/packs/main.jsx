@@ -12,7 +12,7 @@ import  "../layouts/application.css";
 
 const App = ({ title }) => (
   <ApolloProvider client={client}>
-    <div className="text-4xl font-bold">{title}!</div>
+    <div className="text-4xl font-bold p-6">{title}!</div>
     <Pff />
   </ApolloProvider>
 );
