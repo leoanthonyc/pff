@@ -8,6 +8,7 @@ import {
 } from "../../graphql/CategoryGroup";
 import Categories from "../category/Categories";
 import NewCategoryGroup from "./NewCategoryGroup";
+import NewCategory from "../category/NewCategory";
 
 const CategoryGroup = ({ categoryGroup }) => {
   const [name, setName] = useState(categoryGroup.name);
@@ -44,6 +45,7 @@ const CategoryGroup = ({ categoryGroup }) => {
   }, [categoryGroup]);
 
   const totalRemaining = 0;
+  const [newEntry, setNewEntry] = useState(false);
 
   return (
     <>
@@ -73,7 +75,20 @@ const CategoryGroup = ({ categoryGroup }) => {
       ) : (
         <tr className="bg-gray-100 border-t border-b border-dotted">
           <td>
-            <strong>{name}</strong>
+            <div className="flex">
+              <div>
+                <strong>{name}</strong>
+              </div>
+              <div className="pl-2">
+                <button
+                  className="text-gray-500 hover:text-black"
+                  type="button"
+                  onClick={() => setNewEntry(true)}
+                >
+                  + category
+                </button>
+              </div>
+            </div>
           </td>
           <td>{totalBudgeted}</td>
           <td>{totalRemaining}</td>
@@ -88,6 +103,12 @@ const CategoryGroup = ({ categoryGroup }) => {
         categoryGroupId={categoryGroup.id}
         categories={categoryGroup.categories}
       />
+      {newEntry && (
+        <NewCategory
+          categoryGroupId={categoryGroup.id}
+          onClose={() => setNewEntry(false)}
+        />
+      )}
     </>
   );
 };
@@ -115,7 +136,7 @@ const CategoryGroups = () => {
           New Category Group
         </button>
       </div>
-      <table className="table-auto w-full shadow-lg text-left">
+      <table className="table-fixed w-full shadow-lg text-left">
         <thead className="bg-gray-200">
           <tr>
             <th>Name</th>

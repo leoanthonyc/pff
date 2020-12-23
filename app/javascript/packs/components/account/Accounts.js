@@ -105,7 +105,7 @@ const Accounts = () => {
           New Account
         </button>
       </div>
-      <table className="table-auto w-full shadow-lg text-left">
+      <table className="table-fixed w-full shadow-lg text-left">
         <thead className="bg-gray-200">
           <tr>
             <th>Account</th>

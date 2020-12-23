@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import useSaveCategoryMutation from "../../utils/useSaveCategoryMutation";
 
-const NewCategory = ({ categoryGroupId }) => {
+const NewCategory = ({ categoryGroupId, onClose }) => {
   const [name, setName] = useState("");
-  const [value, setValue] = useState(0);
+  const [budget, setBudget] = useState(0);
   const { saveCategory } = useSaveCategoryMutation();
 
   const handleSave = () => {
-    saveCategory({ variables: { categoryGroupId, name, budget: 0 } });
+    saveCategory({ variables: { categoryGroupId, name, budget } });
     setName("");
+    setBudget(0);
+    onClose();
   };
 
   return (
@@ -25,13 +27,17 @@ const NewCategory = ({ categoryGroupId }) => {
       <td>
         <input
           type="number"
-          value={value}
-          onChange={(e) => setValue(+e.target.value)}
+          value={budget}
+          onChange={(e) => setBudget(+e.target.value)}
         />
       </td>
+      <td></td>
       <td>
         <button type="button" onClick={handleSave}>
           Save
+        </button>
+        <button type="button" onClick={onClose}>
+          Cancel
         </button>
       </td>
     </tr>
