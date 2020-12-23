@@ -155,11 +155,15 @@ const Transactions = () => {
   return (
     <div>
       <div>
-        <button type="button" onClick={() => setNewEntry(true)}>
+        <button
+          className="rounded-lg p-2 text-gray-100 hover:text-white bg-green-500 font-semibold shadow-md"
+          type="button"
+          onClick={() => setNewEntry(true)}
+        >
           New Transaction
         </button>
       </div>
-      <table>
+      <table className="table-auto">
         <thead>
           <tr>
             <th>Name</th>

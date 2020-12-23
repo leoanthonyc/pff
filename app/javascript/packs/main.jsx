@@ -8,10 +8,11 @@ import PropTypes from "prop-types";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "./utils/apolloClient";
 import Pff from "./components/pff";
+import  "../layouts/application.css";
 
 const App = ({ title }) => (
   <ApolloProvider client={client}>
-    <h1>{title}!</h1>
+    <div className="text-4xl font-bold">{title}!</div>
     <Pff />
   </ApolloProvider>
 );

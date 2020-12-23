@@ -96,7 +96,6 @@ const Accounts = () => {
   if (loading) return <div> Loading accounts ... </div>;
   return (
     <div>
-      <h2>Accounts</h2>
       <div>
         <button type="button" onClick={() => setNewAccount(true)}>
           New Account
