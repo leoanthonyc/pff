@@ -11,6 +11,7 @@ const Category = ({ category, categoryGroupId }) => {
   const [name, setName] = useState(category.name);
   const [budget, setBudget] = useState(category.budget);
   const [editing, setEditing] = useState(false);
+  const remaining = 0;
   const [saveCategory] = useMutation(SAVE_CATEGORY_MUTATION);
   const [deleteCategory] = useMutation(DELETE_CATEGORY_MUTATION, {
     update(cache) {
@@ -62,6 +63,7 @@ const Category = ({ category, categoryGroupId }) => {
               onChange={(e) => setBudget(+e.target.value)}
             />
           </td>
+          <td>{remaining}</td>
           <td>
             <button type="button" onClick={() => handleSave()}>
               Save
@@ -78,6 +80,7 @@ const Category = ({ category, categoryGroupId }) => {
         <>
           <td>{name}</td>
           <td>{budget}</td>
+          <td>{remaining}</td>
           <td>
             <button type="button" onClick={() => setEditing(true)}>
               Edit

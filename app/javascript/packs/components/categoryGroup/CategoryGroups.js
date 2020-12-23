@@ -43,6 +43,8 @@ const CategoryGroup = ({ categoryGroup }) => {
       .reduce((acc, cv) => (acc = acc + cv), 0);
   }, [categoryGroup]);
 
+  const totalRemaining = 0;
+
   return (
     <>
       {editing ? (
@@ -55,6 +57,7 @@ const CategoryGroup = ({ categoryGroup }) => {
             />
           </td>
           <td>{totalBudgeted}</td>
+          <td>{totalRemaining}</td>
           <td>
             <button type="button" onClick={() => handleSave()}>
               Save
@@ -73,6 +76,7 @@ const CategoryGroup = ({ categoryGroup }) => {
             <strong>{name}</strong>
           </td>
           <td>{totalBudgeted}</td>
+          <td>{totalRemaining}</td>
           <td>
             <button type="button" onClick={() => setEditing(true)}>
               Edit
@@ -114,9 +118,10 @@ const CategoryGroups = () => {
       <table className="table-auto w-full shadow-lg text-left">
         <thead className="bg-gray-200">
           <tr>
-            <th> Name</th>
-            <th> Budgeted</th>
-            <th> Actions</th>
+            <th>Name</th>
+            <th>Budgeted</th>
+            <th>Remaining</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
