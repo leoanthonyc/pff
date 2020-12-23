@@ -16,23 +16,23 @@ ActiveRecord::Schema.define(version: 2020_12_05_033457) do
   enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
-    t.string "name"
-    t.integer "value"
+    t.string "name", null: false
+    t.integer "value", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "categories", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.bigint "category_group_id", null: false
-    t.integer "budget"
+    t.integer "budget", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_group_id"], name: "index_categories_on_category_group_id"
   end
 
   create_table "category_groups", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 2020_12_05_033457) do
     t.string "name"
     t.bigint "category_id", null: false
     t.bigint "account_id", null: false
-    t.integer "value"
+    t.integer "value", default: 0
     t.text "note"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
