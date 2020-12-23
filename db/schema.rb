@@ -37,19 +37,28 @@ ActiveRecord::Schema.define(version: 2020_12_05_033457) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "payees", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "transactions", force: :cascade do |t|
     t.string "name"
     t.bigint "category_id", null: false
     t.bigint "account_id", null: false
+    t.bigint "payee_id", null: false
     t.integer "value", default: 0
     t.text "note"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_id"], name: "index_transactions_on_account_id"
     t.index ["category_id"], name: "index_transactions_on_category_id"
+    t.index ["payee_id"], name: "index_transactions_on_payee_id"
   end
 
   add_foreign_key "categories", "category_groups"
   add_foreign_key "transactions", "accounts"
   add_foreign_key "transactions", "categories"
+  add_foreign_key "transactions", "payees"
 end
