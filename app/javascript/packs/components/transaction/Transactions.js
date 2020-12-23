@@ -14,6 +14,7 @@ const Transaction = ({ transaction }) => {
   const [value, setValue] = useState(transaction.value);
   const [categoryId, setCategoryId] = useState(transaction.category.id);
   const [accountId, setAccountId] = useState(transaction.account.id);
+  const [payee, setPayee] = useState(transaction.payee.name);
   const [editing, setEditing] = useState(false);
   const { accounts } = useAccountsQuery();
   const { categoryGroups } = useCategoryGroupsQuery();
@@ -44,6 +45,7 @@ const Transaction = ({ transaction }) => {
         value,
         categoryId,
         accountId,
+        payee,
         id: transaction.id,
       },
     });
@@ -58,6 +60,13 @@ const Transaction = ({ transaction }) => {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              value={payee}
+              onChange={(e) => setPayee(e.target.value)}
             />
           </td>
           <td>
@@ -118,6 +127,7 @@ const Transaction = ({ transaction }) => {
         <>
           <tr>
             <td>{name}</td>
+            <td>{payee}</td>
             <td>{transaction.account.name}</td>
             <td>{transaction.category.name}</td>
             <td>{transaction.value || 0}</td>
@@ -153,6 +163,7 @@ const Transactions = () => {
         <thead>
           <tr>
             <th>Name</th>
+            <th>Payee</th>
             <th>Account</th>
             <th>Category</th>
             <th>Value</th>

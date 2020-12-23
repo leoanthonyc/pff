@@ -8,6 +8,7 @@ const NewTransaction = ({ onClose }) => {
   const [value, setValue] = useState(0);
   const [categoryId, setCategoryId] = useState("");
   const [accountId, setAccountId] = useState("");
+  const [payee, setPayee] = useState("");
   const { categoryGroups } = useCategoryGroupsQuery();
   const { accounts } = useAccountsQuery();
 
@@ -20,9 +21,12 @@ const NewTransaction = ({ onClose }) => {
         value,
         categoryId,
         accountId,
+        payee,
       },
     });
     setName("");
+    setValue(0);
+    setPayee("");
     onClose();
   };
 
@@ -41,6 +45,13 @@ const NewTransaction = ({ onClose }) => {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          value={payee}
+          onChange={(e) => setPayee(e.target.value)}
         />
       </td>
       <td>

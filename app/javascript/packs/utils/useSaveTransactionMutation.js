@@ -22,6 +22,10 @@ const useSaveTransactionMutation = () => {
                     id
                     name
                   }
+                  payee {
+                    id
+                    name
+                  }
                 }
               `,
             });

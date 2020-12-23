@@ -14,6 +14,10 @@ export const TRANSACTIONS_QUERY = gql`
         id
         name
       }
+      payee {
+        id
+        name
+      }
     }
   }
 `;
@@ -25,6 +29,7 @@ export const SAVE_TRANSACTION_MUTATION = gql`
     $value: Int
     $categoryId: ID!
     $accountId: ID!
+    $payee: String!
   ) {
     saveTransaction(
       input: {
@@ -33,6 +38,7 @@ export const SAVE_TRANSACTION_MUTATION = gql`
         value: $value
         categoryId: $categoryId
         accountId: $accountId
+        payee: $payee
       }
     ) {
       transaction {
@@ -44,6 +50,10 @@ export const SAVE_TRANSACTION_MUTATION = gql`
           name
         }
         account {
+          id
+          name
+        }
+        payee {
           id
           name
         }

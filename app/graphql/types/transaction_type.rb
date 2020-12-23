@@ -8,6 +8,7 @@ module Types
     field :value, Integer, null: false
     field :category, CategoryType, null: false
     field :account, AccountType, null: false
+    field :payee, PayeeType, null: false
 
     def value
       object.value || 0
