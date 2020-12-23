@@ -40,13 +40,16 @@ const NewCategoryGroup = ({ onClose }) => {
           placeholder={"new category group"}
           onChange={(e) => setName(e.target.value)}
         />
-      </td>
-      <td></td>
-      <td>
-        <button type="submit" onClick={handleSave}>
+        <button type="button" onClick={handleSave}>
           Save
         </button>
+        <button type="button" onClick={onClose}>
+          Cancel
+        </button>
       </td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
   );
 };
