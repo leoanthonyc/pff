@@ -8,7 +8,7 @@ import {
 
 const Category = ({ category, categoryGroupId }) => {
   const [name, setName] = useState(category.name);
-  const [budget, setBudget] = useState(category.budget);
+  const [goal, setGoal] = useState(category.goal);
   const [editing, setEditing] = useState(false);
   const [saveCategory] = useMutation(SAVE_CATEGORY_MUTATION);
   const [deleteCategory] = useMutation(DELETE_CATEGORY_MUTATION, {
@@ -35,7 +35,7 @@ const Category = ({ category, categoryGroupId }) => {
     await saveCategory({
       variables: {
         name,
-        budget,
+        goal,
         id: category.id,
         categoryGroupId: categoryGroupId,
       },
@@ -57,8 +57,8 @@ const Category = ({ category, categoryGroupId }) => {
           <td>
             <input
               type="text"
-              value={budget}
-              onChange={(e) => setBudget(+e.target.value)}
+              value={goal}
+              onChange={(e) => setGoal(+e.target.value)}
             />
           </td>
           <td>{category.remaining}</td>
@@ -77,7 +77,7 @@ const Category = ({ category, categoryGroupId }) => {
       ) : (
         <>
           <td>{name}</td>
-          <td>{budget}</td>
+          <td>{goal}</td>
           <td>{category.remaining}</td>
           <td>
             <button type="button" onClick={() => setEditing(true)}>

@@ -5,5 +5,7 @@ class CreatePayees < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
+
+    Payee.create(name: 'Initial Value')
   end
 end

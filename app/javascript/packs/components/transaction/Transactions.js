@@ -14,7 +14,7 @@ const Transaction = ({ transaction }) => {
   const [value, setValue] = useState(transaction.value);
   const [categoryId, setCategoryId] = useState(transaction.category.id);
   const [accountId, setAccountId] = useState(transaction.account.id);
-  const [payee, setPayee] = useState(transaction.payee.name);
+  const [payee, setPayee] = useState(transaction.payee?.name ?? null);
   const [editing, setEditing] = useState(false);
   const { accounts } = useAccountsQuery();
   const { categoryGroups } = useCategoryGroupsQuery();
@@ -51,59 +51,79 @@ const Transaction = ({ transaction }) => {
     });
     setEditing(false);
   };
+
+  const systemGenerated = transaction.payee.name == "Initial Value";
+
   return (
     <tr className="border-t border-b border-dotted">
       {editing ? (
         <>
-          <td>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </td>
-          <td>
-            <input
-              type="text"
-              value={payee}
-              onChange={(e) => setPayee(e.target.value)}
-            />
-          </td>
-          <td>
-            <select
-              value={accountId}
-              onChange={(e) => setAccountId(e.target.value)}
-            >
-              {accounts.map((account) => {
-                return (
-                  <option key={account.id} value={account.id}>
-                    {account.name}
-                  </option>
-                );
-              })}
-            </select>
-          </td>
-          <td>
-            <select
-              value={categoryId}
-              onChange={(e) => setCategoryId(e.target.value)}
-            >
-              {categoryGroups.map((categoryGroup) => {
-                return (
-                  <optgroup
-                    key={categoryGroup.id || ""}
-                    label={categoryGroup.name}
-                  >
-                    {categoryGroup.categories.map((category) => (
-                      <option key={category.id} value={category.id}>
-                        {category.name}
+          {systemGenerated ? (
+            <>
+              <td>{name}</td>
+              <td>{payee}</td>
+              <td>{transaction.account.name}</td>
+              <td>{transaction.category.name}</td>
+            </>
+          ) : (
+            <>
+              <td>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </td>
+              <td>
+                {payee && (
+                  <input
+                    type="text"
+                    value={payee}
+                    onChange={(e) => setPayee(e.target.value)}
+                  />
+                )}
+              </td>
+              <td>
+                <select
+                  value={accountId}
+                  onChange={(e) => setAccountId(e.target.value)}
+                >
+                  {accounts.map((account) => {
+                    return (
+                      <option key={account.id} value={account.id}>
+                        {account.name}
                       </option>
-                    ))}
-                  </optgroup>
-                );
-              })}
-            </select>
-          </td>
+                    );
+                  })}
+                </select>
+              </td>
+              <td>
+                {transaction.category.name === "notbudgeted" ? (
+                  transaction.category.name
+                ) : (
+                  <select
+                    value={categoryId}
+                    onChange={(e) => setCategoryId(e.target.value)}
+                  >
+                    {categoryGroups.map((categoryGroup) => {
+                      return (
+                        <optgroup
+                          key={categoryGroup.id || ""}
+                          label={categoryGroup.name}
+                        >
+                          {categoryGroup.categories.map((category) => (
+                            <option key={category.id} value={category.id}>
+                              {category.name}
+                            </option>
+                          ))}
+                        </optgroup>
+                      );
+                    })}
+                  </select>
+                )}
+              </td>
+            </>
+          )}
           <td>
             <input
               type="number"

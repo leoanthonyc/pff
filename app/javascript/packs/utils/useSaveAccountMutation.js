@@ -13,7 +13,6 @@ const useSaveAccountMutation = () => {
                 fragment NewAccount on Account {
                   id
                   name
-                  value
                 }
               `,
             });

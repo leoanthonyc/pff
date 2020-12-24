@@ -29,7 +29,7 @@ export const SAVE_TRANSACTION_MUTATION = gql`
     $value: Int
     $categoryId: ID!
     $accountId: ID!
-    $payee: String!
+    $payee: String
   ) {
     saveTransaction(
       input: {

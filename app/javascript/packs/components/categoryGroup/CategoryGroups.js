@@ -38,9 +38,9 @@ const CategoryGroup = ({ categoryGroup }) => {
     setEditing(false);
   };
 
-  const totalBudgeted = useMemo(() => {
+  const totalGoal = useMemo(() => {
     return categoryGroup.categories
-      .map((c) => c.budget)
+      .map((c) => c.goal)
       .reduce((acc, cv) => (acc = acc + cv), 0);
   }, [categoryGroup]);
 
@@ -58,7 +58,7 @@ const CategoryGroup = ({ categoryGroup }) => {
               onChange={(e) => setName(e.target.value)}
             />
           </td>
-          <td>{totalBudgeted}</td>
+          <td>{totalGoal}</td>
           <td>{totalRemaining}</td>
           <td>
             <button type="button" onClick={() => handleSave()}>
@@ -90,7 +90,7 @@ const CategoryGroup = ({ categoryGroup }) => {
               </div>
             </div>
           </td>
-          <td>{totalBudgeted}</td>
+          <td>{totalGoal}</td>
           <td>{totalRemaining}</td>
           <td>
             <button type="button" onClick={() => setEditing(true)}>
@@ -140,7 +140,7 @@ const CategoryGroups = () => {
         <thead className="bg-gray-200">
           <tr>
             <th>Name</th>
-            <th>Budgeted</th>
+            <th>Goal</th>
             <th>Remaining</th>
             <th>Actions</th>
           </tr>

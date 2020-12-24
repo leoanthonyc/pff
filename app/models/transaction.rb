@@ -4,5 +4,5 @@
 class Transaction < ApplicationRecord
   belongs_to :category
   belongs_to :account
-  belongs_to :payee
+  belongs_to :payee, optional: true
 end

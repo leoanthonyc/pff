@@ -4,21 +4,21 @@ export const SAVE_CATEGORY_MUTATION = gql`
   mutation SaveCategory(
     $id: ID
     $name: String!
-    $budget: Int!
     $categoryGroupId: ID!
+    $goal: Int
   ) {
     saveCategory(
       input: {
         id: $id
         name: $name
-        budget: $budget
         categoryGroupId: $categoryGroupId
+        goal: $goal
       }
     ) {
       category {
         id
         name
-        budget
+        goal
       }
     }
   }

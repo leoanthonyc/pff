@@ -11,8 +11,8 @@ export const ACCOUNTS_QUERY = gql`
 `;
 
 export const SAVE_ACCOUNT_MUTATION = gql`
-  mutation SaveAccount($id: ID, $name: String!, $value: Int!) {
-    saveAccount(input: { id: $id, name: $name, value: $value }) {
+  mutation SaveAccount($id: ID, $name: String!, $initialValue: Int) {
+    saveAccount(input: { id: $id, name: $name, initialValue: $initialValue }) {
       account {
         id
         name

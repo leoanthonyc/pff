@@ -5,7 +5,7 @@ module Types
   class CategoryType < Types::BaseObject
     field :id, ID, null: false
     field :name, String, null: false
-    field :budget, Integer, null: false
+    field :goal, Integer, null: false
     field :category_group, Types::CategoryGroupType, null: false
 
     field :remaining, Integer, null: false
@@ -18,7 +18,7 @@ module Types
                     .where('created_at >= ? AND created_at < ?', month_start, month_end)
                     .pluck(:value)
                     .sum
-      object.budget + total_spent
+      object.goal + total_spent
     end
   end
 end

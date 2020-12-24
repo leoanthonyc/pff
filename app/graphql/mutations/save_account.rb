@@ -7,19 +7,26 @@ module Mutations
 
     argument :id, ID, required: false
     argument :name, String, required: true
-    argument :value, Integer, required: true
+    argument :initial_value, Integer, required: false
 
     field :account, Types::AccountType, null: false
 
-    def resolve(id: nil, name:, value:)
+    def resolve(id: nil, name:, initial_value:)
       account = if id
                   Account.find(id)
                 else
                   Account.new
                 end
       account.name = name
-      account.value = value
       account.save!
+      if id.nil?
+        account.transactions.create!(
+          category: Category.not_budgeted,
+          name: 'Initial Value',
+          payee: Payee.initial_value,
+          value: initial_value
+        )
+      end
       { account: account }
     end
   end

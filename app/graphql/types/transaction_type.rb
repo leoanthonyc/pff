@@ -9,9 +9,5 @@ module Types
     field :category, CategoryType, null: false
     field :account, AccountType, null: false
     field :payee, PayeeType, null: false
-
-    def value
-      object.value || 0
-    end
   end
 end

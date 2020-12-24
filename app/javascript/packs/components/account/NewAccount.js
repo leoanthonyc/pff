@@ -4,13 +4,13 @@ import useSaveAccountMutation from "../../utils/useSaveAccountMutation";
 
 const NewAccount = ({ onClose }) => {
   const [name, setName] = useState("");
-  const [value, setValue] = useState(0);
+  const [initialValue, setInitialValue] = useState(0);
   const { saveAccount } = useSaveAccountMutation();
 
   const handleSave = () => {
-    saveAccount({ variables: { name, value } });
+    saveAccount({ variables: { name, initialValue } });
     setName("");
-    setValue(0);
+    setInitialValue(0);
     onClose();
   };
 
@@ -27,8 +27,8 @@ const NewAccount = ({ onClose }) => {
       <td>
         <input
           type="number"
-          value={value}
-          onChange={(e) => setValue(+e.target.value)}
+          value={initialValue}
+          onChange={(e) => setInitialValue(+e.target.value)}
         />
       </td>
       <td>

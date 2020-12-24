@@ -7,11 +7,9 @@ import {
   DELETE_ACCOUNT_MUTATION,
 } from "../../graphql/Account";
 import NewAccount from "./NewAccount";
-import NewTransaction from "../transaction/NewTransaction";
 
 const Account = ({ account }) => {
   const [name, setName] = useState(account.name);
-  const [value, setValue] = useState(account.value);
   const [editing, setEditing] = useState(false);
   const [saveAccount] = useMutation(SAVE_ACCOUNT_MUTATION);
   const [deleteAccount] = useMutation(DELETE_ACCOUNT_MUTATION, {
@@ -34,7 +32,7 @@ const Account = ({ account }) => {
   };
 
   const handleSave = async () => {
-    await saveAccount({ variables: { id: account.id, name, value } });
+    await saveAccount({ variables: { id: account.id, name } });
     setEditing(false);
   };
   return (
@@ -48,13 +46,7 @@ const Account = ({ account }) => {
               onChange={(e) => setName(e.target.value)}
             />
           </td>
-          <td>
-            <input
-              type="number"
-              value={value}
-              onChange={(e) => setValue(+e.target.value)}
-            />
-          </td>
+          <td>{account.value}</td>
           <td>
             <button type="button" onClick={() => handleSave()}>
               Save
@@ -70,7 +62,7 @@ const Account = ({ account }) => {
       ) : (
         <>
           <td>{name}</td>
-          <td>{value}</td>
+          <td>{account.value}</td>
           <td>
             <button type="button" onClick={() => setEditing(true)}>
               Edit
@@ -109,7 +101,7 @@ const Accounts = () => {
         <thead className="bg-gray-200">
           <tr>
             <th>Account</th>
-            <th>Initial Amount</th>
+            <th>Value</th>
             <th>Actions</th>
           </tr>
         </thead>

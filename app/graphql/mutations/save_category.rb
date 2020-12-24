@@ -7,12 +7,12 @@ module Mutations
 
     argument :id, ID, required: false
     argument :name, String, required: true
-    argument :budget, Integer, required: true
     argument :category_group_id, ID, required: true
+    argument :goal, Integer, required: false
 
     field :category, Types::CategoryType, null: false
 
-    def resolve(id: nil, name:, budget:, category_group_id:)
+    def resolve(id: nil, name:, goal: 0, category_group_id:)
       category_group = CategoryGroup.find(category_group_id)
       category = if id
                    category_group.categories.find(id)
@@ -20,7 +20,7 @@ module Mutations
                    category_group.categories.new
                  end
       category.name = name
-      category.budget = budget
+      category.goal = goal
       category.save!
       { category: category }
     end

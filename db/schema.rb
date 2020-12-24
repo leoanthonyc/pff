@@ -17,15 +17,14 @@ ActiveRecord::Schema.define(version: 2020_12_05_033457) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "name", null: false
-    t.integer "value", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
-    t.bigint "category_group_id", null: false
-    t.integer "budget", default: 0
+    t.bigint "category_group_id"
+    t.integer "goal", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_group_id"], name: "index_categories_on_category_group_id"
@@ -47,7 +46,7 @@ ActiveRecord::Schema.define(version: 2020_12_05_033457) do
     t.string "name"
     t.bigint "category_id", null: false
     t.bigint "account_id", null: false
-    t.bigint "payee_id", null: false
+    t.bigint "payee_id"
     t.integer "value", default: 0
     t.text "note"
     t.datetime "created_at", precision: 6, null: false
