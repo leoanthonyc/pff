@@ -5,11 +5,12 @@ import {
   Route,
   NavLink,
 } from "react-router-dom";
-import Dashboard from "./dashboard";
-import Accounts from "./account/Accounts";
+import Transactions from "./transaction/Transactions";
 import CategoryGroups from "./categoryGroup/CategoryGroups";
+import useAccountsQuery from "../utils/useAccountsQuery";
 
 const Pff = () => {
+  const { accounts } = useAccountsQuery();
   return (
     <Router>
       <div className="flex">
@@ -17,33 +18,36 @@ const Pff = () => {
           <nav>
             <ul>
               <li className="text-lg hover:text-black">
-                <NavLink activeClassName="text-black" to="/transactions">
-                  Transactions
+                <NavLink activeClassName="text-black" to="/budget">
+                  Budget
                 </NavLink>
               </li>
-              <li className="text-lg hover:text-black">
-                <NavLink activeClassName="text-black" to="/categories">
-                  Categories
-                </NavLink>
-              </li>
-              <li className="text-lg hover:text-black">
-                <NavLink activeClassName="text-black" to="/accounts">
+              <li>
+                <div>
                   Accounts
-                </NavLink>
+                  <div className="text-lg hover:text-black">
+                    {accounts.map(({ id, name }) => (
+                      <NavLink
+                        key={id}
+                        activeClassName="text-black"
+                        to={`/accounts/${id}`}
+                      >
+                        {name}
+                      </NavLink>
+                    ))}
+                  </div>
+                </div>
               </li>
             </ul>
           </nav>
         </div>
         <div className="flex-1 p-6">
           <Switch>
-            <Route path="/categories">
+            <Route path="/budget">
               <CategoryGroups />
             </Route>
-            <Route path="/accounts">
-              <Accounts />
-            </Route>
-            <Route path="/transactions">
-              <Dashboard />
+            <Route path={`/accounts/:accountId`}>
+              <Transactions />
             </Route>
           </Switch>
         </div>

@@ -56,9 +56,15 @@ module Types
       Transaction.find(id)
     end
 
-    field :transactions, [Types::TransactionType], null: false
-    def transactions
-      Transaction.all
+    field :transactions, [Types::TransactionType], null: false do
+      argument :account_id, ID, required: false
+    end
+    def transactions(account_id:)
+      if account_id
+        Transaction.where(account_id: account_id)
+      else
+        Transaction.all
+      end
     end
   end
 end

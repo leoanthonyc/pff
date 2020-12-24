@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import {
   DELETE_TRANSACTION_MUTATION,
@@ -163,16 +164,26 @@ const Transaction = ({ transaction }) => {
 
 const Transactions = () => {
   const [newEntry, setNewEntry] = useState(false);
+  let { accountId } = useParams();
   const {
     transactions,
     transactionsError,
     transactionsLoading,
-  } = useTransactionsQuery();
+  } = useTransactionsQuery({ variables: { accountId } });
+  const account = useMemo(() => transactions[0]?.account, [transactions]);
   if (transactionsError) return <div> Error loading transactions :( </div>;
   if (transactionsLoading) return <div> Loading transactions ... </div>;
   return (
     <div>
-      <div className="pb-4">
+      <div className="pb-4 flex justify-between">
+        <div className="flex">
+          <div className="text-lg font-bold">{account.name}</div>
+          <div
+            className={account.value > 0 ? "text-green-500" : "text-red-500"}
+          >
+            {account.value}
+          </div>
+        </div>
         <button
           className="rounded-lg p-2 text-gray-100 hover:text-white bg-green-500 font-semibold shadow-md"
           type="button"

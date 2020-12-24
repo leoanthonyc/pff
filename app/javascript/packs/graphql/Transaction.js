@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const TRANSACTIONS_QUERY = gql`
-  query Transactions {
-    transactions {
+  query Transactions($accountId: ID) {
+    transactions(accountId: $accountId) {
       id
       name
       value
@@ -13,6 +13,7 @@ export const TRANSACTIONS_QUERY = gql`
       account {
         id
         name
+        value
       }
       payee {
         id
@@ -52,6 +53,7 @@ export const SAVE_TRANSACTION_MUTATION = gql`
         account {
           id
           name
+          value
         }
         payee {
           id
