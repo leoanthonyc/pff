@@ -7,5 +7,18 @@ module Types
     field :name, String, null: false
     field :budget, Integer, null: false
     field :category_group, Types::CategoryGroupType, null: false
+
+    field :remaining, Integer, null: false
+
+    def remaining
+      month_start = Date.current.beginning_of_month
+      month_end = month_start.end_of_month
+      total_spent = Transaction
+                    .where(category: object)
+                    .where('created_at >= ? AND created_at < ?', month_start, month_end)
+                    .pluck(:value)
+                    .sum
+      object.budget + total_spent
+    end
   end
 end
