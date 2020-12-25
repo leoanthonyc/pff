@@ -46,7 +46,7 @@ module Types
 
     field :accounts, [Types::AccountType], null: false
     def accounts
-      Account.all
+      Account.all.order(:created_at)
     end
 
     field :transaction, Types::TransactionType, null: false do

@@ -6,7 +6,13 @@ const useSaveAccountMutation = () => {
     update(cache, { data: { saveAccount } }) {
       cache.modify({
         fields: {
-          accounts(existingAccounts = []) {
+          accounts(existingAccounts = [], { readField }) {
+            if (
+              existingAccounts.find(
+                (ref) => readField("id", ref) === saveAccount.account.id
+              )
+            )
+              return existingAccounts;
             const newAccount = cache.writeFragment({
               data: saveAccount.account,
               fragment: gql`

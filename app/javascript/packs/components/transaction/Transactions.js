@@ -177,9 +177,11 @@ const Transactions = () => {
     <div>
       <div className="pb-4 flex justify-between">
         <div className="flex">
-          <div className="text-lg font-bold">{account.name}</div>
+          <div className="text-lg font-bold mr-2">{account.name}</div>
           <div
-            className={account.value > 0 ? "text-green-500" : "text-red-500"}
+            className={`
+            text-xl font-bold
+            ${account.value > 0 ? "text-green-400" : "text-red-400"}`}
           >
             {account.value}
           </div>
