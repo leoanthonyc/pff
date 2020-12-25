@@ -10,6 +10,8 @@ const NewAccount = () => {
 
   const handleSave = () => {
     saveAccount({ variables: { name, initialValue } });
+    setName("");
+    setInitialValue(0);
     setShow(false);
   };
 
