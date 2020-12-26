@@ -66,7 +66,7 @@ const NewAccount = () => {
         + New Account
       </button>
       {show && (
-        <Modal header="New Action" body={modalBody} actions={modalActions} />
+        <Modal header="New Account" body={modalBody} actions={modalActions} />
       )}
     </div>
   );
