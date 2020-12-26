@@ -6,9 +6,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import { ApolloProvider } from "@apollo/client";
-import { client } from "./utils/apolloClient";
-import Pff from "./components/pff";
-import  "../layouts/application.css";
+import { client } from "../utils/apolloClient";
+import Pff from "../components/pff";
+import "../layouts/application.css";
 
 const App = ({ title }) => (
   <ApolloProvider client={client}>

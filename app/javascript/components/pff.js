@@ -5,9 +5,9 @@ import {
   Route,
   NavLink,
 } from "react-router-dom";
-import Accounts from "./account/Accounts";
-import CategoryGroups from "./categoryGroup/CategoryGroups";
-import Transactions from "./transaction/Transactions";
+import Accounts from "./Accounts";
+import CategoryGroups from "./CategoryGroups";
+import Transactions from "./Transactions";
 
 const Pff = () => {
   return (

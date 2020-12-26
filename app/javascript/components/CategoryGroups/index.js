@@ -6,9 +6,9 @@ import {
   SAVE_CATEGORY_GROUP_MUTATION,
   DELETE_CATEGORY_GROUP_MUTATION,
 } from "../../graphql/CategoryGroup";
-import Categories from "../category/Categories";
+import Categories from "../Categories";
 import NewCategoryGroup from "./NewCategoryGroup";
-import NewCategory from "../category/NewCategory";
+import NewCategory from "../Categories/NewCategory";
 
 const CategoryGroup = ({ categoryGroup }) => {
   const [name, setName] = useState(categoryGroup.name);

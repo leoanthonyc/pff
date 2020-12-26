@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import Modal from "../modal";
+import Modal from "../Modal";
 import useSaveAccountMutation from "../../utils/useSaveAccountMutation";
 import useDeleteAccountMutation from "../../utils/useDeleteAccountMutation";
 

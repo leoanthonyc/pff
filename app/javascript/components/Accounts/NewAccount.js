@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Modal from "../modal";
+import Modal from "../Modal";
 import useSaveAccountMutation from "../../utils/useSaveAccountMutation";
 
 const NewAccount = () => {
