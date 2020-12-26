@@ -150,7 +150,15 @@ const Transaction = ({ transaction }) => {
           <td>{payee}</td>
           <td>{transaction.account.name}</td>
           <td>{transaction.category.name}</td>
-          <td>{transaction.value || 0}</td>
+          <td>
+            <div
+              className={
+                transaction.value >= 0 ? "text-green-700" : "text-red-700"
+              }
+            >
+              {transaction.value}
+            </div>
+          </td>
           <td>
             <button type="button" onClick={() => setEditing(true)}>
               Edit
