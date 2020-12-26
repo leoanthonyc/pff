@@ -4,26 +4,17 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "../utils/apolloClient";
 import Pff from "../components/pff";
 import "../layouts/application.css";
 
-const App = ({ title }) => (
+const App = () => (
   <ApolloProvider client={client}>
-    <div className="text-4xl font-bold p-6">{title}!</div>
     <Pff />
   </ApolloProvider>
 );
 
-App.defaultProps = {
-  title: "Title",
-};
-
-App.propTypes = {
-  title: PropTypes.string,
-};
 
 document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(

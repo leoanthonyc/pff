@@ -12,10 +12,11 @@ import Transactions from "./Transactions";
 const Pff = () => {
   return (
     <Router>
-      <div className="flex">
+      <div className="flex px-2">
         <div className="flex-initial text-black p-6">
+          <div className="text-2xl font-bold">PFF</div>
           <nav>
-            <ul>
+            <ul className="py-2">
               <li>
                 <NavLink
                   className="flex w-full"

@@ -94,7 +94,7 @@ const NewTransaction = ({ onClose }) => {
         />
       </td>
       <td>
-        <button type="button" onClick={() => handleSave()}>
+        <button className="pr-1" type="button" onClick={() => handleSave()}>
           Save
         </button>
         <button type="button" onClick={() => onClose()}>

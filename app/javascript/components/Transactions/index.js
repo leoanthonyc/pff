@@ -70,6 +70,7 @@ const Transaction = ({ transaction }) => {
             <>
               <td>
                 <input
+                  className="ring ring-blue-500 rounded-sm"
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -78,6 +79,7 @@ const Transaction = ({ transaction }) => {
               <td>
                 {payee && (
                   <input
+                    className="ring ring-blue-500 rounded-sm"
                     type="text"
                     value={payee}
                     onChange={(e) => setPayee(e.target.value)}
@@ -86,6 +88,7 @@ const Transaction = ({ transaction }) => {
               </td>
               <td>
                 <select
+                  className="ring ring-blue-500 rounded-sm"
                   value={accountId}
                   onChange={(e) => setAccountId(e.target.value)}
                 >
@@ -103,6 +106,7 @@ const Transaction = ({ transaction }) => {
                   transaction.category.name
                 ) : (
                   <select
+                    className="ring ring-blue-500 rounded-sm"
                     value={categoryId}
                     onChange={(e) => setCategoryId(e.target.value)}
                   >
@@ -127,20 +131,33 @@ const Transaction = ({ transaction }) => {
           )}
           <td>
             <input
+              className="ring ring-blue-500 rounded-sm"
               type="number"
               value={value}
               onChange={(e) => setValue(+e.target.value)}
             />
           </td>
           <td>
-            <button type="button" onClick={() => handleSave()}>
+            <button
+              className="border border-transparent hover:border-gray-300 px-2.5 rounded-md focus:bg-gray-300 focus:outline-none"
+              type="button"
+              onClick={() => setEditing(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="pr-1 border border-transparent hover:border-gray-300 px-2.5 rounded-md focus:bg-gray-300 focus:outline-none"
+              type="button"
+              onClick={() => handleSave()}
+            >
               Save
             </button>
-            <button type="button" onClick={() => handleDelete()}>
+            <button
+              className="pr-1 border border-transparent hover:border-gray-300 px-2.5 rounded-md focus:bg-gray-300 focus:outline-none"
+              type="button"
+              onClick={() => handleDelete()}
+            >
               Delete
-            </button>
-            <button type="button" onClick={() => setEditing(false)}>
-              Cancel
             </button>
           </td>
         </>
@@ -160,7 +177,11 @@ const Transaction = ({ transaction }) => {
             </div>
           </td>
           <td>
-            <button type="button" onClick={() => setEditing(true)}>
+            <button
+              className="border border-transparent hover:border-gray-300 px-2.5 rounded-md focus:bg-gray-300 focus:outline-none"
+              type="button"
+              onClick={() => setEditing(true)}
+            >
               Edit
             </button>
           </td>
@@ -199,7 +220,7 @@ const Transactions = () => {
           type="button"
           onClick={() => setNewEntry(true)}
         >
-          New Transaction
+          + New Transaction
         </button>
       </div>
       <table className="table-fixed w-full shadow-lg text-left">
