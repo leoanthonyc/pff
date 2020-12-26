@@ -189,7 +189,7 @@ const Transactions = () => {
           <div
             className={`
             text-xl font-bold
-            ${account.value > 0 ? "text-green-400" : "text-red-400"}`}
+            ${account.value > 0 ? "text-green-600" : "text-red-600"}`}
           >
             {account.value}
           </div>

@@ -17,10 +17,10 @@ const CategoryGroups = () => {
       <table className="table-fixed w-full shadow-lg text-left">
         <thead className="bg-gray-200">
           <tr>
-            <th>Name</th>
-            <th>Budget</th>
-            <th>Available</th>
-            <th>Actions</th>
+            <th className="px-2">Name</th>
+            <th className="px-2">Budget</th>
+            <th className="px-2">Available</th>
+            <th className="px-2">Actions</th>
           </tr>
         </thead>
         <tbody>

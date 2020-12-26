@@ -89,9 +89,9 @@ const Category = ({ category, categoryGroupId }) => {
 
   return (
     <tr className="border-t border-b border-dotted">
-      <td>{name}</td>
-      <td>{goal}</td>
-      <td>
+      <td className="px-2">{name}</td>
+      <td className="px-2">{goal}</td>
+      <td className="px-2">
         <div
           className={
             category.remaining >= 0 ? "text-green-700" : "text-red-700"
@@ -100,7 +100,7 @@ const Category = ({ category, categoryGroupId }) => {
           {category.remaining}
         </div>
       </td>
-      <td>
+      <td className="px-2">
         <button
           className="border border-transparent hover:border-gray-300 py-0.5 px-2.5 rounded-md focus:bg-gray-300 focus:outline-none"
           type="button"
