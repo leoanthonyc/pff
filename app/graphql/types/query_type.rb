@@ -22,7 +22,7 @@ module Types
 
     field :category_groups, [Types::CategoryGroupType], null: true
     def category_groups
-      CategoryGroup.all
+      CategoryGroup.all.order(created_at: :desc)
     end
 
     field :category, Types::CategoryType, null: false do
@@ -46,7 +46,7 @@ module Types
 
     field :accounts, [Types::AccountType], null: false
     def accounts
-      Account.all.order(:created_at)
+      Account.all.order(created_at: :desc)
     end
 
     field :transaction, Types::TransactionType, null: false do
