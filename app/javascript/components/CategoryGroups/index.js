@@ -18,8 +18,8 @@ const CategoryGroups = () => {
         <thead className="bg-gray-200">
           <tr>
             <th>Name</th>
-            <th>Goal</th>
-            <th>Remaining</th>
+            <th>Budget</th>
+            <th>Available</th>
             <th>Actions</th>
           </tr>
         </thead>
