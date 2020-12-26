@@ -60,11 +60,12 @@ module Types
       argument :account_id, ID, required: false
     end
     def transactions(account_id:)
-      if account_id
-        Transaction.where(account_id: account_id)
-      else
-        Transaction.all
-      end
+      transactions = if account_id
+                       Transaction.where(account_id: account_id)
+                     else
+                       Transaction.all
+                     end
+      transactions.order(created_at: :desc)
     end
   end
 end

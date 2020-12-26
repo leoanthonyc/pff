@@ -4,7 +4,7 @@
 class Category < ApplicationRecord
   belongs_to :category_group, optional: true
 
-  NOT_BUDGETED = 'not_budgeted'
+  NOT_BUDGETED = 'Not Budgeted'
 
   def self.not_budgeted
     where(name: NOT_BUDGETED).first

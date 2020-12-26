@@ -1,30 +1,16 @@
 import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { useMutation } from "@apollo/client";
-import {
-  SAVE_CATEGORY_GROUP_MUTATION,
-  DELETE_CATEGORY_GROUP_MUTATION,
-} from "../../graphql/CategoryGroup";
+import { SAVE_CATEGORY_GROUP_MUTATION } from "../../graphql/CategoryGroup";
 import Categories from "../Categories";
 import NewCategory from "../Categories/NewCategory";
 import Modal from "../Modal";
+import useDeleteCategoryGroupMutation from "../../utils/useDeleteCategoryGroupMutations";
 
 const CategoryGroup = ({ categoryGroup }) => {
   const [name, setName] = useState(categoryGroup.name);
   const [saveCategoryGroup] = useMutation(SAVE_CATEGORY_GROUP_MUTATION);
-  const [deleteCategoryGroup] = useMutation(DELETE_CATEGORY_GROUP_MUTATION, {
-    update(cache) {
-      cache.modify({
-        fields: {
-          categoryGroups(existingCategoryGroups = [], { readField }) {
-            return existingCategoryGroups.filter(
-              (ref) => readField("id", ref) !== categoryGroup.id
-            );
-          },
-        },
-      });
-    },
-  });
+  const { deleteCategoryGroup } = useDeleteCategoryGroupMutation(categoryGroup);
 
   const handleDelete = async () => {
     deleteCategoryGroup({ variables: { id: categoryGroup.id } });
@@ -47,7 +33,11 @@ const CategoryGroup = ({ categoryGroup }) => {
       .reduce((acc, cv) => (acc = acc + cv), 0);
   }, [categoryGroup]);
 
-  const totalRemaining = 0;
+  const totalRemaining = useMemo(() => {
+    return categoryGroup.categories
+      .map((c) => c.remaining)
+      .reduce((acc, cv) => (acc = acc + cv), 0);
+  }, [categoryGroup]);
 
   const [show, setShow] = useState(false);
   const modalBody = (
