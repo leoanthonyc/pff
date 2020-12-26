@@ -95,9 +95,19 @@ const CategoryGroup = ({ categoryGroup }) => {
           </div>
         </td>
         <td>{totalGoal}</td>
-        <td>{totalRemaining}</td>
         <td>
-          <button type="button" onClick={() => setShow(true)}>
+          <div
+            className={totalRemaining >= 0 ? "text-green-700" : "text-red-700"}
+          >
+            {totalRemaining}
+          </div>
+        </td>
+        <td>
+          <button
+            className="border border-transparent hover:border-gray-300 py-0.5 px-2.5 rounded-md focus:bg-gray-300 focus:outline-none"
+            type="button"
+            onClick={() => setShow(true)}
+          >
             Edit
           </button>
           {show && (
