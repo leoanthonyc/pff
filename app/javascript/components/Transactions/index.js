@@ -204,8 +204,19 @@ const Transactions = () => {
     transactions,
     transactionsError,
     transactionsLoading,
-  } = useTransactionsQuery({ variables: { accountId } });
-  const account = useMemo(() => transactions[0]?.account, [transactions]);
+  } = useTransactionsQuery({
+    variables: { accountId: accountId !== "all" ? accountId : null },
+  });
+  const account = useMemo(
+    () =>
+      accountId !== "all"
+        ? transactions[0]?.account
+        : {
+            name: "All",
+            value: transactions.reduce((sum, t) => (sum += t.value), 0),
+          },
+    [transactions]
+  );
   if (transactionsError) return <div> Error loading transactions :( </div>;
   if (transactionsLoading) return <div> Loading transactions ... </div>;
   return (
