@@ -15,12 +15,12 @@ const CategoryGroups = () => {
         <NewCategoryGroup />
       </div>
       <table className="table-fixed w-full shadow-lg text-left">
-        <thead className="bg-gray-200">
+        <thead className="bg-gray-200 text-sm">
           <tr>
-            <th className="px-2">Name</th>
-            <th className="px-2">Budget</th>
-            <th className="px-2">Available</th>
-            <th className="px-2">Actions</th>
+            <th className="px-2">NAME</th>
+            <th className="px-2">BUDGET</th>
+            <th className="px-2">AVAILABLE</th>
+            <th className="px-2">ACTIONS</th>
           </tr>
         </thead>
         <tbody>
