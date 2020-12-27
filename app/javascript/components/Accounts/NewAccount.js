@@ -17,19 +17,19 @@ const NewAccount = () => {
 
   const modalBody = (
     <>
-      <div>
+      <div className="py-2">
         Name
         <input
-          className="block border border-gray-500"
+          className="block border border-gray-500 rounded p-1 text-sm"
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
       </div>
-      <div>
+      <div className="py-2">
         Initial Value
         <input
-          className="block border border-gray-500"
+          className="block border border-gray-500 rounded p-1 text-sm"
           type="number"
           value={initialValue}
           onChange={(e) => setInitialValue(+e.target.value)}
