@@ -10,7 +10,7 @@ const Accounts = () => {
   return (
     <li>
       <NavLink
-        className="flex justify-between w-full"
+        className="flex justify-between w-full px-2"
         activeClassName="rounded-md bg-gray-300"
         to={"/accounts/all"}
       >

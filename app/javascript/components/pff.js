@@ -14,12 +14,16 @@ const Pff = () => {
     <Router>
       <div className="flex px-2">
         <div className="flex-initial text-black p-6">
-          <div className="text-2xl font-bold">PFF</div>
+          <div className="text-2xl font-bold">
+            <NavLink className="px-2" to="/budget">
+              PFF
+            </NavLink>
+          </div>
           <nav>
             <ul className="py-2">
               <li>
                 <NavLink
-                  className="flex w-full"
+                  className="flex w-full px-2"
                   activeClassName="rounded-md bg-gray-300"
                   to="/budget"
                 >

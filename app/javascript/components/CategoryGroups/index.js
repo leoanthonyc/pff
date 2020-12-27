@@ -11,7 +11,7 @@ const CategoryGroups = () => {
 
   return (
     <div>
-      <div className="pb-4">
+      <div className="pb-2">
         <NewCategoryGroup />
       </div>
       <table className="table-fixed w-full shadow-lg text-left">

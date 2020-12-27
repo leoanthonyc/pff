@@ -66,14 +66,14 @@ const Transaction = ({ transaction }) => {
         <>
           {systemGenerated ? (
             <>
-              <td>{name}</td>
-              <td>{payee}</td>
-              <td>{transaction.account.name}</td>
-              <td>{transaction.category.name}</td>
+              <td className="px-2">{name}</td>
+              <td className="px-2">{payee}</td>
+              <td className="px-2">{transaction.account.name}</td>
+              <td className="px-2">{transaction.category.name}</td>
             </>
           ) : (
             <>
-              <td>
+              <td className="px-2">
                 <input
                   className="ring ring-blue-500 rounded-sm"
                   type="text"
@@ -81,7 +81,7 @@ const Transaction = ({ transaction }) => {
                   onChange={(e) => setName(e.target.value)}
                 />
               </td>
-              <td>
+              <td className="px-2">
                 {payee && (
                   <input
                     className="ring ring-blue-500 rounded-sm"
@@ -91,7 +91,7 @@ const Transaction = ({ transaction }) => {
                   />
                 )}
               </td>
-              <td>
+              <td className="px-2">
                 <select
                   className="ring ring-blue-500 rounded-sm"
                   value={accountId}
@@ -106,7 +106,7 @@ const Transaction = ({ transaction }) => {
                   })}
                 </select>
               </td>
-              <td>
+              <td className="px-2">
                 {transaction.category.name === "notbudgeted" ? (
                   transaction.category.name
                 ) : (
@@ -134,7 +134,7 @@ const Transaction = ({ transaction }) => {
               </td>
             </>
           )}
-          <td>
+          <td className="px-2">
             <input
               className="ring ring-blue-500 rounded-sm"
               type="text"
@@ -142,7 +142,7 @@ const Transaction = ({ transaction }) => {
               onChange={(e) => setOutflow(+e.target.value)}
             />
           </td>
-          <td>
+          <td className="px-2">
             <input
               className="ring ring-blue-500 rounded-sm"
               type="text"
@@ -150,7 +150,7 @@ const Transaction = ({ transaction }) => {
               onChange={(e) => setInflow(+e.target.value)}
             />
           </td>
-          <td>
+          <td className="px-2">
             <button
               className="border border-transparent hover:border-gray-300 px-2.5 rounded-md focus:bg-gray-300 focus:outline-none"
               type="button"
@@ -176,13 +176,13 @@ const Transaction = ({ transaction }) => {
         </>
       ) : (
         <>
-          <td>{name}</td>
-          <td>{payee}</td>
-          <td>{transaction.account.name}</td>
-          <td>{transaction.category.name}</td>
-          <td>{outflow}</td>
-          <td>{inflow}</td>
-          <td>
+          <td className="px-2">{name}</td>
+          <td className="px-2">{payee}</td>
+          <td className="px-2">{transaction.account.name}</td>
+          <td className="px-2">{transaction.category.name}</td>
+          <td className="px-2">{outflow}</td>
+          <td className="px-2">{inflow}</td>
+          <td className="px-2">
             <button
               className="border border-transparent hover:border-gray-300 px-2.5 rounded-md focus:bg-gray-300 focus:outline-none"
               type="button"
@@ -221,7 +221,7 @@ const Transactions = () => {
   if (transactionsLoading) return <div> Loading transactions ... </div>;
   return (
     <div>
-      <div className="pb-4 flex justify-between">
+      <div className="p-2 flex justify-between bg-gray-200">
         <div className="flex">
           <div className="text-lg font-bold mr-2">{account.name}</div>
           <div
@@ -232,8 +232,10 @@ const Transactions = () => {
             {account.value}
           </div>
         </div>
+      </div>
+      <div className="py-2">
         <button
-          className="rounded-lg p-2 text-gray-100 hover:text-white bg-green-500 font-semibold shadow-md"
+          className="border border-transparent hover:border-gray-300 py-0.5 px-2 rounded-md focus:bg-gray-300 focus:outline-none font-medium"
           type="button"
           onClick={() => setNewEntry(true)}
         >
@@ -243,13 +245,13 @@ const Transactions = () => {
       <table className="table-fixed w-full shadow-lg text-left">
         <thead className="bg-gray-200">
           <tr>
-            <th>Name</th>
-            <th>Payee</th>
-            <th>Account</th>
-            <th>Category</th>
-            <th>Outflow</th>
-            <th>Inflow</th>
-            <th>Actions</th>
+            <th className="px-2">Name</th>
+            <th className="px-2">Payee</th>
+            <th className="px-2">Account</th>
+            <th className="px-2">Category</th>
+            <th className="px-2">Outflow</th>
+            <th className="px-2">Inflow</th>
+            <th className="px-2">Actions</th>
           </tr>
         </thead>
         <tbody>

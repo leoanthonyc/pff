@@ -57,9 +57,9 @@ const NewAccount = () => {
   );
 
   return (
-    <div>
+    <div className="ml-2">
       <button
-        className="border border-transparent hover:border-gray-300 py-0.5 px-2.5 rounded-md focus:bg-gray-300 focus:outline-none font-medium"
+        className="border border-transparent hover:border-gray-300 py-0.5 px-2 rounded-md focus:bg-gray-300 focus:outline-none font-medium"
         type="button"
         onClick={() => setShow(true)}
       >
