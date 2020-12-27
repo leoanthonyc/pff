@@ -5,7 +5,8 @@ import useSaveTransactionMutation from "../../utils/useSaveTransactionMutation";
 
 const NewTransaction = ({ onClose }) => {
   const [name, setName] = useState("");
-  const [value, setValue] = useState(0);
+  const [inflow, setInflow] = useState(0);
+  const [outflow, setOutflow] = useState(0);
   const [categoryId, setCategoryId] = useState("");
   const [accountId, setAccountId] = useState("");
   const [payee, setPayee] = useState("");
@@ -18,14 +19,15 @@ const NewTransaction = ({ onClose }) => {
     await saveTransaction({
       variables: {
         name,
-        value,
+        value: inflow + outflow * -1,
         categoryId,
         accountId,
         payee,
       },
     });
     setName("");
-    setValue(0);
+    setInflow("");
+    setOutflow("");
     setPayee("");
     onClose();
   };
@@ -88,9 +90,18 @@ const NewTransaction = ({ onClose }) => {
       </td>
       <td>
         <input
-          type="number"
-          value={value}
-          onChange={(e) => setValue(+e.target.value)}
+          type="text"
+          placeholder="outflow"
+          value={outflow}
+          onChange={(e) => setOutflow(+e.target.value)}
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          placeholder="inflow"
+          value={inflow}
+          onChange={(e) => setInflow(+e.target.value)}
         />
       </td>
       <td>

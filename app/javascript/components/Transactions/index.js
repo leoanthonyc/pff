@@ -12,10 +12,15 @@ import useTransactionsQuery from "../../utils/useTransactionsQuery";
 
 const Transaction = ({ transaction }) => {
   const [name, setName] = useState(transaction.name);
-  const [value, setValue] = useState(transaction.value);
+  const [inflow, setInflow] = useState(
+    transaction.value >= 0 ? transaction.value : 0
+  );
+  const [outflow, setOutflow] = useState(
+    transaction.value < 0 ? transaction.value * -1 : 0
+  );
   const [categoryId, setCategoryId] = useState(transaction.category.id);
   const [accountId, setAccountId] = useState(transaction.account.id);
-  const [payee, setPayee] = useState(transaction.payee?.name ?? null);
+  const [payee, setPayee] = useState(transaction.payee?.name ?? "");
   const [editing, setEditing] = useState(false);
   const { accounts } = useAccountsQuery();
   const { categoryGroups } = useCategoryGroupsQuery();
@@ -43,7 +48,7 @@ const Transaction = ({ transaction }) => {
     await saveTransaction({
       variables: {
         name,
-        value,
+        value: inflow + outflow * -1,
         categoryId,
         accountId,
         payee,
@@ -132,9 +137,17 @@ const Transaction = ({ transaction }) => {
           <td>
             <input
               className="ring ring-blue-500 rounded-sm"
-              type="number"
-              value={value}
-              onChange={(e) => setValue(+e.target.value)}
+              type="text"
+              value={outflow}
+              onChange={(e) => setOutflow(+e.target.value)}
+            />
+          </td>
+          <td>
+            <input
+              className="ring ring-blue-500 rounded-sm"
+              type="text"
+              value={inflow}
+              onChange={(e) => setInflow(+e.target.value)}
             />
           </td>
           <td>
@@ -167,15 +180,8 @@ const Transaction = ({ transaction }) => {
           <td>{payee}</td>
           <td>{transaction.account.name}</td>
           <td>{transaction.category.name}</td>
-          <td>
-            <div
-              className={
-                transaction.value >= 0 ? "text-green-700" : "text-red-700"
-              }
-            >
-              {transaction.value}
-            </div>
-          </td>
+          <td>{outflow}</td>
+          <td>{inflow}</td>
           <td>
             <button
               className="border border-transparent hover:border-gray-300 px-2.5 rounded-md focus:bg-gray-300 focus:outline-none"
@@ -230,7 +236,8 @@ const Transactions = () => {
             <th>Payee</th>
             <th>Account</th>
             <th>Category</th>
-            <th>Value</th>
+            <th>Outflow</th>
+            <th>Inflow</th>
             <th>Actions</th>
           </tr>
         </thead>

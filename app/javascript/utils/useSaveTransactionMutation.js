@@ -29,7 +29,7 @@ const useSaveTransactionMutation = () => {
                 }
               `,
             });
-            return [...existingTransactions, newTransaction];
+            return [newTransaction, ...existingTransactions];
           },
         },
       });
