@@ -3,12 +3,12 @@ import useAccountsQuery from "../../utils/useAccountsQuery";
 import useCategoryGroupsQuery from "../../utils/useCategoryGroupsQuery";
 import useSaveTransactionMutation from "../../utils/useSaveTransactionMutation";
 
-const NewTransaction = ({ onClose }) => {
+const NewTransaction = ({ accountId, onClose }) => {
   const [name, setName] = useState("");
   const [inflow, setInflow] = useState(0);
   const [outflow, setOutflow] = useState(0);
   const [categoryId, setCategoryId] = useState("");
-  const [accountId, setAccountId] = useState("");
+  const [selectedAccount, setSelectedAccount] = useState(accountId || "");
   const [payee, setPayee] = useState("");
   const { categoryGroups } = useCategoryGroupsQuery();
   const { accounts } = useAccountsQuery();
@@ -19,10 +19,10 @@ const NewTransaction = ({ onClose }) => {
     await saveTransaction({
       variables: {
         name,
-        value: inflow + outflow * -1,
         categoryId,
-        accountId,
         payee,
+        value: inflow + outflow * -1,
+        accountId: selectedAccount,
       },
     });
     setName("");
@@ -36,14 +36,11 @@ const NewTransaction = ({ onClose }) => {
     setCategoryId(categoryGroups[0]?.categories[0].id);
   }, [categoryGroups]);
 
-  useEffect(() => {
-    setAccountId(accounts[0]?.id);
-  }, [accounts]);
-
   return (
     <tr className="border-t border-b border-dotted">
       <td>
         <input
+          className="ring ring-blue-500 rounded-sm"
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -51,6 +48,7 @@ const NewTransaction = ({ onClose }) => {
       </td>
       <td>
         <input
+          className="ring ring-blue-500 rounded-sm"
           type="text"
           value={payee}
           onChange={(e) => setPayee(e.target.value)}
@@ -58,8 +56,9 @@ const NewTransaction = ({ onClose }) => {
       </td>
       <td>
         <select
-          value={accountId}
-          onChange={(e) => setAccountId(e.target.value)}
+          className="ring ring-blue-500 rounded-sm"
+          value={selectedAccount}
+          onChange={(e) => setSelectedAccount(e.target.value)}
         >
           {accounts.map((account) => {
             return (
@@ -72,6 +71,7 @@ const NewTransaction = ({ onClose }) => {
       </td>
       <td>
         <select
+          className="ring ring-blue-500 rounded-sm"
           value={categoryId}
           onChange={(e) => setCategoryId(e.target.value)}
         >
@@ -90,6 +90,7 @@ const NewTransaction = ({ onClose }) => {
       </td>
       <td>
         <input
+          className="ring ring-blue-500 rounded-sm"
           type="text"
           placeholder="outflow"
           value={outflow}
@@ -98,6 +99,7 @@ const NewTransaction = ({ onClose }) => {
       </td>
       <td>
         <input
+          className="ring ring-blue-500 rounded-sm"
           type="text"
           placeholder="inflow"
           value={inflow}

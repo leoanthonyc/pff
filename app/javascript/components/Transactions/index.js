@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import {
@@ -207,6 +207,7 @@ const Transactions = () => {
   } = useTransactionsQuery({
     variables: { accountId: accountId !== "all" ? accountId : null },
   });
+
   const account = useMemo(
     () =>
       accountId !== "all"
@@ -217,8 +218,12 @@ const Transactions = () => {
           },
     [transactions]
   );
+
+  useEffect(() => setNewEntry(false), [accountId]);
+
   if (transactionsError) return <div> Error loading transactions :( </div>;
   if (transactionsLoading) return <div> Loading transactions ... </div>;
+
   return (
     <div>
       <div className="p-2 flex justify-between bg-gray-200">
@@ -255,7 +260,12 @@ const Transactions = () => {
           </tr>
         </thead>
         <tbody>
-          {newEntry && <NewTransaction onClose={() => setNewEntry(false)} />}
+          {newEntry && (
+            <NewTransaction
+              accountId={account.id ?? null}
+              onClose={() => setNewEntry(false)}
+            />
+          )}
           {transactions.map((transaction) => (
             <Transaction key={transaction.id} transaction={transaction} />
           ))}
