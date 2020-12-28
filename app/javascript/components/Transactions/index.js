@@ -74,6 +74,7 @@ const Transactions = () => {
           {newEntry && (
             <NewTransaction
               accountId={account.id ?? null}
+              showAccount={showAccount}
               onClose={() => setNewEntry(false)}
             />
           )}

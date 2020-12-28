@@ -3,7 +3,7 @@ import useAccountsQuery from "../../utils/useAccountsQuery";
 import useCategoryGroupsQuery from "../../utils/useCategoryGroupsQuery";
 import useSaveTransactionMutation from "../../utils/useSaveTransactionMutation";
 
-const NewTransaction = ({ accountId, onClose }) => {
+const NewTransaction = ({ accountId, showAccount, onClose }) => {
   const [payee, setPayee] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [selectedAccount, setSelectedAccount] = useState(accountId || "");
@@ -46,21 +46,23 @@ const NewTransaction = ({ accountId, onClose }) => {
           onChange={(e) => setPayee(e.target.value)}
         />
       </td>
-      <td className="px-2">
-        <select
-          className="ring ring-blue-500 rounded-sm"
-          value={selectedAccount}
-          onChange={(e) => setSelectedAccount(e.target.value)}
-        >
-          {accounts.map((account) => {
-            return (
-              <option key={account.id} value={account.id}>
-                {account.name}
-              </option>
-            );
-          })}
-        </select>
-      </td>
+      {showAccount && (
+        <td className="px-2">
+          <select
+            className="ring ring-blue-500 rounded-sm"
+            value={selectedAccount}
+            onChange={(e) => setSelectedAccount(e.target.value)}
+          >
+            {accounts.map((account) => {
+              return (
+                <option key={account.id} value={account.id}>
+                  {account.name}
+                </option>
+              );
+            })}
+          </select>
+        </td>
+      )}
       <td className="px-2">
         <select
           className="ring ring-blue-500 rounded-sm"
