@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 2020_12_05_033457) do
     t.bigint "payee_id"
     t.integer "value", default: 0
     t.text "note"
+    t.datetime "date", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_id"], name: "index_transactions_on_account_id"

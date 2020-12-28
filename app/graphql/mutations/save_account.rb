@@ -21,6 +21,7 @@ module Mutations
       account.save!
       if id.nil?
         account.transactions.create!(
+          date: Time.current,
           category: Category.not_budgeted,
           payee: Payee.initial_value,
           value: initial_value,
