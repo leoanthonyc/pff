@@ -4,8 +4,11 @@ export const TRANSACTIONS_QUERY = gql`
   query Transactions($accountId: ID) {
     transactions(accountId: $accountId) {
       id
-      name
       value
+      payee {
+        id
+        name
+      }
       category {
         id
         name
@@ -15,10 +18,7 @@ export const TRANSACTIONS_QUERY = gql`
         name
         value
       }
-      payee {
-        id
-        name
-      }
+      note
     }
   }
 `;
@@ -26,26 +26,29 @@ export const TRANSACTIONS_QUERY = gql`
 export const SAVE_TRANSACTION_MUTATION = gql`
   mutation SaveTransaction(
     $id: ID
-    $name: String!
+    $payee: String!
     $value: Int
     $categoryId: ID!
     $accountId: ID!
-    $payee: String
+    $note: String
   ) {
     saveTransaction(
       input: {
         id: $id
-        name: $name
+        payee: $payee
         value: $value
         categoryId: $categoryId
         accountId: $accountId
-        payee: $payee
+        note: $note
       }
     ) {
       transaction {
         id
-        name
         value
+        payee {
+          id
+          name
+        }
         category {
           id
           name
@@ -55,10 +58,7 @@ export const SAVE_TRANSACTION_MUTATION = gql`
           name
           value
         }
-        payee {
-          id
-          name
-        }
+        note
       }
     }
   }

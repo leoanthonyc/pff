@@ -43,7 +43,6 @@ ActiveRecord::Schema.define(version: 2020_12_05_033457) do
   end
 
   create_table "transactions", force: :cascade do |t|
-    t.string "name"
     t.bigint "category_id", null: false
     t.bigint "account_id", null: false
     t.bigint "payee_id"

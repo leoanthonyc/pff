@@ -6,25 +6,21 @@ module Mutations
     null false
 
     argument :id, ID, required: false
-    argument :name, String, required: true
+    argument :payee, String, required: true
     argument :value, Integer, required: false
     argument :category_id, ID, required: true
     argument :account_id, ID, required: true
-    argument :payee, String, required: true
+    argument :note, String, required: false
 
     field :transaction, Types::TransactionType, null: false
 
-    def resolve(id: nil, name:, value: 0, category_id:, account_id:, payee: '')
-      transaction = if id
-                      Transaction.find(id)
-                    else
-                      Transaction.new
-                    end
-      transaction.name = name
+    def resolve(id: nil, payee:, value: 0, category_id:, account_id:, note: '')
+      transaction = Transaction.find_or_create_by(id: id)
+      transaction.payee = find_payee(payee)
       transaction.value = value
       transaction.category = Category.find(category_id)
       transaction.account = Account.find(account_id)
-      transaction.payee = find_payee(payee)
+      transaction.note = note
       transaction.save!
       { transaction: transaction }
     end

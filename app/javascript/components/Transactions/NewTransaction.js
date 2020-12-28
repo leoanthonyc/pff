@@ -4,12 +4,12 @@ import useCategoryGroupsQuery from "../../utils/useCategoryGroupsQuery";
 import useSaveTransactionMutation from "../../utils/useSaveTransactionMutation";
 
 const NewTransaction = ({ accountId, onClose }) => {
-  const [name, setName] = useState("");
-  const [inflow, setInflow] = useState(0);
-  const [outflow, setOutflow] = useState(0);
+  const [payee, setPayee] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [selectedAccount, setSelectedAccount] = useState(accountId || "");
-  const [payee, setPayee] = useState("");
+  const [note, setNote] = useState("");
+  const [inflow, setInflow] = useState(0);
+  const [outflow, setOutflow] = useState(0);
   const { categoryGroups } = useCategoryGroupsQuery();
   const { accounts } = useAccountsQuery();
 
@@ -18,14 +18,14 @@ const NewTransaction = ({ accountId, onClose }) => {
   const handleSave = async () => {
     await saveTransaction({
       variables: {
-        name,
+        note,
         categoryId,
         payee,
         value: inflow + outflow * -1,
         accountId: selectedAccount,
       },
     });
-    setName("");
+    setNote("");
     setInflow("");
     setOutflow("");
     setPayee("");
@@ -38,15 +38,7 @@ const NewTransaction = ({ accountId, onClose }) => {
 
   return (
     <tr className="border-t border-b border-dotted">
-      <td>
-        <input
-          className="ring ring-blue-500 rounded-sm"
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </td>
-      <td>
+      <td className="px-2">
         <input
           className="ring ring-blue-500 rounded-sm"
           type="text"
@@ -54,7 +46,7 @@ const NewTransaction = ({ accountId, onClose }) => {
           onChange={(e) => setPayee(e.target.value)}
         />
       </td>
-      <td>
+      <td className="px-2">
         <select
           className="ring ring-blue-500 rounded-sm"
           value={selectedAccount}
@@ -69,7 +61,7 @@ const NewTransaction = ({ accountId, onClose }) => {
           })}
         </select>
       </td>
-      <td>
+      <td className="px-2">
         <select
           className="ring ring-blue-500 rounded-sm"
           value={categoryId}
@@ -88,7 +80,15 @@ const NewTransaction = ({ accountId, onClose }) => {
           })}
         </select>
       </td>
-      <td>
+      <td className="px-2">
+        <input
+          className="ring ring-blue-500 rounded-sm"
+          type="text"
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+        />
+      </td>
+      <td className="px-2">
         <input
           className="ring ring-blue-500 rounded-sm"
           type="text"
@@ -97,7 +97,7 @@ const NewTransaction = ({ accountId, onClose }) => {
           onChange={(e) => setOutflow(+e.target.value)}
         />
       </td>
-      <td>
+      <td className="px-2">
         <input
           className="ring ring-blue-500 rounded-sm"
           type="text"
@@ -106,11 +106,19 @@ const NewTransaction = ({ accountId, onClose }) => {
           onChange={(e) => setInflow(+e.target.value)}
         />
       </td>
-      <td>
-        <button className="pr-1" type="button" onClick={() => handleSave()}>
+      <td className="px-1">
+        <button
+          className="border border-transparent hover:border-gray-300 px-2.5 rounded-md focus:bg-gray-300 focus:outline-none"
+          type="button"
+          onClick={() => handleSave()}
+        >
           Save
         </button>
-        <button type="button" onClick={() => onClose()}>
+        <button
+          className="border border-transparent hover:border-gray-300 px-2.5 rounded-md focus:bg-gray-300 focus:outline-none"
+          type="button"
+          onClick={() => onClose()}
+        >
           Cancel
         </button>
       </td>

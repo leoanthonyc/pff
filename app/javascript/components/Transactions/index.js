@@ -11,16 +11,16 @@ import NewTransaction from "./NewTransaction";
 import useTransactionsQuery from "../../utils/useTransactionsQuery";
 
 const Transaction = ({ transaction }) => {
-  const [name, setName] = useState(transaction.name);
+  const [payee, setPayee] = useState(transaction.payee?.name ?? "");
+  const [categoryId, setCategoryId] = useState(transaction.category.id);
+  const [accountId, setAccountId] = useState(transaction.account.id);
+  const [note, setNote] = useState(transaction.note);
   const [inflow, setInflow] = useState(
     transaction.value >= 0 ? transaction.value : 0
   );
   const [outflow, setOutflow] = useState(
     transaction.value < 0 ? transaction.value * -1 : 0
   );
-  const [categoryId, setCategoryId] = useState(transaction.category.id);
-  const [accountId, setAccountId] = useState(transaction.account.id);
-  const [payee, setPayee] = useState(transaction.payee?.name ?? "");
   const [editing, setEditing] = useState(false);
   const { accounts } = useAccountsQuery();
   const { categoryGroups } = useCategoryGroupsQuery();
@@ -47,7 +47,7 @@ const Transaction = ({ transaction }) => {
   const handleSave = async () => {
     await saveTransaction({
       variables: {
-        name,
+        note,
         value: inflow + outflow * -1,
         categoryId,
         accountId,
@@ -66,21 +66,13 @@ const Transaction = ({ transaction }) => {
         <>
           {systemGenerated ? (
             <>
-              <td className="px-2">{name}</td>
               <td className="px-2">{payee}</td>
               <td className="px-2">{transaction.account.name}</td>
               <td className="px-2">{transaction.category.name}</td>
+              <td className="px-2">{note}</td>
             </>
           ) : (
             <>
-              <td className="px-2">
-                <input
-                  className="ring ring-blue-500 rounded-sm"
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </td>
               <td className="px-2">
                 {payee && (
                   <input
@@ -132,6 +124,14 @@ const Transaction = ({ transaction }) => {
                   </select>
                 )}
               </td>
+              <td className="px-2">
+                <input
+                  className="ring ring-blue-500 rounded-sm"
+                  type="text"
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                />
+              </td>
             </>
           )}
           <td className="px-2">
@@ -150,7 +150,7 @@ const Transaction = ({ transaction }) => {
               onChange={(e) => setInflow(+e.target.value)}
             />
           </td>
-          <td className="px-2">
+          <td className="px-1">
             <button
               className="border border-transparent hover:border-gray-300 px-2.5 rounded-md focus:bg-gray-300 focus:outline-none"
               type="button"
@@ -176,13 +176,13 @@ const Transaction = ({ transaction }) => {
         </>
       ) : (
         <>
-          <td className="px-2">{name}</td>
           <td className="px-2">{payee}</td>
           <td className="px-2">{transaction.account.name}</td>
           <td className="px-2">{transaction.category.name}</td>
+          <td className="px-2">{note}</td>
           <td className="px-2">{outflow}</td>
           <td className="px-2">{inflow}</td>
-          <td className="px-2">
+          <td className="px-1">
             <button
               className="border border-transparent hover:border-gray-300 px-2.5 rounded-md focus:bg-gray-300 focus:outline-none"
               type="button"
@@ -250,11 +250,10 @@ const Transactions = () => {
       <table className="table-fixed w-full shadow-lg text-left">
         <thead className="bg-gray-200 text-sm">
           <tr>
-            <th className="px-2">DATE</th>
-            <th className="px-2">NAME</th>
             <th className="px-2">PAYEE</th>
             <th className="px-2">ACCOUNT</th>
             <th className="px-2">CATEGORY</th>
+            <th className="px-2">NOTE</th>
             <th className="px-2">OUTFLOW</th>
             <th className="px-2">INFLOW</th>
             <th className="px-2">ACTIONS</th>

@@ -22,9 +22,9 @@ module Mutations
       if id.nil?
         account.transactions.create!(
           category: Category.not_budgeted,
-          name: 'Initial Value',
           payee: Payee.initial_value,
-          value: initial_value
+          value: initial_value,
+          note: 'Initial Value'
         )
       end
       { account: account }
