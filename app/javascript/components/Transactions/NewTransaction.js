@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import useAccountsQuery from "../../utils/useAccountsQuery";
 import useCategoryGroupsQuery from "../../utils/useCategoryGroupsQuery";
 import useSaveTransactionMutation from "../../utils/useSaveTransactionMutation";
+import { formatDate } from "../../utils/date";
 
 const NewTransaction = ({ accountId, showAccount, onClose }) => {
+  const [date, setDate] = useState(formatDate(new Date()));
   const [payee, setPayee] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [selectedAccount, setSelectedAccount] = useState(accountId || "");
@@ -18,6 +20,7 @@ const NewTransaction = ({ accountId, showAccount, onClose }) => {
   const handleSave = async () => {
     await saveTransaction({
       variables: {
+        date,
         note,
         categoryId,
         payee,
@@ -25,6 +28,7 @@ const NewTransaction = ({ accountId, showAccount, onClose }) => {
         accountId: selectedAccount,
       },
     });
+    setDate(formatDate(new Date()));
     setNote("");
     setInflow("");
     setOutflow("");
@@ -36,14 +40,18 @@ const NewTransaction = ({ accountId, showAccount, onClose }) => {
     setCategoryId(categoryGroups[0]?.categories[0].id);
   }, [categoryGroups]);
 
+  useEffect(() => {
+    setSelectedAccount(accounts[0]?.id);
+  }, [accounts]);
+
   return (
     <tr className="border-t border-b border-dotted">
       <td className="px-2">
         <input
           className="ring ring-blue-500 rounded-sm"
-          type="text"
-          value={payee}
-          onChange={(e) => setPayee(e.target.value)}
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
         />
       </td>
       {showAccount && (
@@ -63,6 +71,14 @@ const NewTransaction = ({ accountId, showAccount, onClose }) => {
           </select>
         </td>
       )}
+      <td className="px-2">
+        <input
+          className="ring ring-blue-500 rounded-sm"
+          type="text"
+          value={payee}
+          onChange={(e) => setPayee(e.target.value)}
+        />
+      </td>
       <td className="px-2">
         <select
           className="ring ring-blue-500 rounded-sm"

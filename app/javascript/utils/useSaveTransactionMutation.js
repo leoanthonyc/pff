@@ -12,7 +12,8 @@ const useSaveTransactionMutation = () => {
               fragment: gql`
                 fragment NewTransaction on Transaction {
                   id
-                  name
+                  date
+                  note
                   value
                   account {
                     id

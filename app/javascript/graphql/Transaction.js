@@ -4,6 +4,7 @@ export const TRANSACTIONS_QUERY = gql`
   query Transactions($accountId: ID) {
     transactions(accountId: $accountId) {
       id
+      date
       value
       payee {
         id
@@ -26,6 +27,7 @@ export const TRANSACTIONS_QUERY = gql`
 export const SAVE_TRANSACTION_MUTATION = gql`
   mutation SaveTransaction(
     $id: ID
+    $date: String!
     $payee: String!
     $value: Int
     $categoryId: ID!
@@ -35,6 +37,7 @@ export const SAVE_TRANSACTION_MUTATION = gql`
     saveTransaction(
       input: {
         id: $id
+        date: $date
         payee: $payee
         value: $value
         categoryId: $categoryId
@@ -44,6 +47,7 @@ export const SAVE_TRANSACTION_MUTATION = gql`
     ) {
       transaction {
         id
+        date
         value
         payee {
           id

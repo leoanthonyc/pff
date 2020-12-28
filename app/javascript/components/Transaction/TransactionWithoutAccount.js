@@ -7,6 +7,7 @@ import {
 import useCategoryGroupsQuery from "../../utils/useCategoryGroupsQuery";
 
 const TransactionWithoutAccount = ({ transaction }) => {
+  const [date, setDate] = useState(transaction.date);
   const [payee, setPayee] = useState(transaction.payee?.name ?? "");
   const [categoryId, setCategoryId] = useState(transaction.category.id);
   const [note, setNote] = useState(transaction.note);
@@ -41,6 +42,7 @@ const TransactionWithoutAccount = ({ transaction }) => {
   const handleSave = async () => {
     await saveTransaction({
       variables: {
+        date,
         payee,
         categoryId,
         note,
@@ -60,6 +62,7 @@ const TransactionWithoutAccount = ({ transaction }) => {
         <>
           {systemGenerated ? (
             <>
+              <td className="px-2">{date}</td>
               <td className="px-2">{payee}</td>
               <td className="px-2">{transaction.category.name}</td>
               <td className="px-2">{note}</td>
@@ -67,14 +70,20 @@ const TransactionWithoutAccount = ({ transaction }) => {
           ) : (
             <>
               <td className="px-2">
-                {payee && (
-                  <input
-                    className="ring ring-blue-500 rounded-sm"
-                    type="text"
-                    value={payee}
-                    onChange={(e) => setPayee(e.target.value)}
-                  />
-                )}
+                <input
+                  className="ring ring-blue-500 rounded-sm"
+                  type="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                />
+              </td>
+              <td className="px-2">
+                <input
+                  className="ring ring-blue-500 rounded-sm"
+                  type="text"
+                  value={payee}
+                  onChange={(e) => setPayee(e.target.value)}
+                />
               </td>
               <td className="px-2">
                 {transaction.category.name === "notbudgeted" ? (
@@ -154,6 +163,7 @@ const TransactionWithoutAccount = ({ transaction }) => {
         </>
       ) : (
         <>
+          <td className="px-2">{date}</td>
           <td className="px-2">{payee}</td>
           <td className="px-2">{transaction.category.name}</td>
           <td className="px-2">{note}</td>

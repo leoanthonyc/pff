@@ -61,6 +61,7 @@ const Transactions = () => {
       <table className="table-fixed w-full shadow-lg text-left">
         <thead className="bg-gray-200 text-sm">
           <tr>
+            <th className="px-2">DATE</th>
             {showAccount && <th className="px-2">ACCOUNT</th>}
             <th className="px-2">PAYEE</th>
             <th className="px-2">CATEGORY</th>

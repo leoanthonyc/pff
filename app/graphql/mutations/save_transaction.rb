@@ -6,6 +6,7 @@ module Mutations
     null false
 
     argument :id, ID, required: false
+    argument :date, GraphQL::Types::ISO8601Date, required: true
     argument :payee, String, required: true
     argument :value, Integer, required: false
     argument :category_id, ID, required: true
@@ -14,8 +15,9 @@ module Mutations
 
     field :transaction, Types::TransactionType, null: false
 
-    def resolve(id: nil, payee:, value: 0, category_id:, account_id:, note: '')
+    def resolve(id: nil, date:, payee:, value: 0, category_id:, account_id:, note: '')
       transaction = Transaction.find_or_create_by(id: id)
+      transaction.date = normalize_date(date)
       transaction.payee = find_payee(payee)
       transaction.value = value
       transaction.category = Category.find(category_id)
@@ -26,6 +28,11 @@ module Mutations
     end
 
     private
+
+    def normalize_date(d)
+      t = Time.now
+      DateTime.new(d.year, d.month, d.day, t.hour, t.min, t.sec, t.zone)
+    end
 
     def find_payee(payee_str)
       Payee.find_or_create_by(name: payee_str)

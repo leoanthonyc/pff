@@ -8,6 +8,7 @@ import useAccountsQuery from "../../utils/useAccountsQuery";
 import useCategoryGroupsQuery from "../../utils/useCategoryGroupsQuery";
 
 const TransactionWithAccount = ({ transaction }) => {
+  const [date, setDate] = useState(transaction.date);
   const [payee, setPayee] = useState(transaction.payee?.name ?? "");
   const [categoryId, setCategoryId] = useState(transaction.category.id);
   const [accountId, setAccountId] = useState(transaction.account.id);
@@ -44,6 +45,7 @@ const TransactionWithAccount = ({ transaction }) => {
   const handleSave = async () => {
     await saveTransaction({
       variables: {
+        date,
         note,
         value: inflow + outflow * -1,
         categoryId,
@@ -63,6 +65,7 @@ const TransactionWithAccount = ({ transaction }) => {
         <>
           {systemGenerated ? (
             <>
+              <td className="px-2">{date}</td>
               <td className="px-2">{transaction.account.name}</td>
               <td className="px-2">{payee}</td>
               <td className="px-2">{transaction.category.name}</td>
@@ -70,6 +73,14 @@ const TransactionWithAccount = ({ transaction }) => {
             </>
           ) : (
             <>
+              <td className="px-2">
+                <input
+                  className="ring ring-blue-500 rounded-sm"
+                  type="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                />
+              </td>
               <td className="px-2">
                 <select
                   className="ring ring-blue-500 rounded-sm"
@@ -86,14 +97,12 @@ const TransactionWithAccount = ({ transaction }) => {
                 </select>
               </td>
               <td className="px-2">
-                {payee && (
-                  <input
-                    className="ring ring-blue-500 rounded-sm"
-                    type="text"
-                    value={payee}
-                    onChange={(e) => setPayee(e.target.value)}
-                  />
-                )}
+                <input
+                  className="ring ring-blue-500 rounded-sm"
+                  type="text"
+                  value={payee}
+                  onChange={(e) => setPayee(e.target.value)}
+                />
               </td>
               <td className="px-2">
                 {transaction.category.name === "notbudgeted" ? (
@@ -173,6 +182,7 @@ const TransactionWithAccount = ({ transaction }) => {
         </>
       ) : (
         <>
+          <td className="px-2">{date}</td>
           <td className="px-2">{transaction.account.name}</td>
           <td className="px-2">{payee}</td>
           <td className="px-2">{transaction.category.name}</td>

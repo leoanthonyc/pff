@@ -65,7 +65,7 @@ module Types
                      else
                        Transaction.all
                      end
-      transactions.order(created_at: :desc)
+      transactions.order(date: :desc)
     end
   end
 end
