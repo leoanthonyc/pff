@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Autocomplete, createFilterOptions } from "@material-ui/lab";
 import { useMutation } from "@apollo/client";
 import {
   DELETE_TRANSACTION_MUTATION,
@@ -6,6 +7,7 @@ import {
 } from "../../graphql/Transaction";
 import useAccountsQuery from "../../utils/useAccountsQuery";
 import useCategoryGroupsQuery from "../../utils/useCategoryGroupsQuery";
+import usePayeesQuery from "../../utils/usePayeesQuery";
 
 const TransactionWithAccount = ({ transaction }) => {
   const [date, setDate] = useState(transaction.date);
@@ -20,8 +22,11 @@ const TransactionWithAccount = ({ transaction }) => {
     transaction.value < 0 ? transaction.value * -1 : 0
   );
   const [editing, setEditing] = useState(false);
+
   const { accounts } = useAccountsQuery();
   const { categoryGroups } = useCategoryGroupsQuery();
+  const { payees } = usePayeesQuery();
+
   const [saveTransaction] = useMutation(SAVE_TRANSACTION_MUTATION);
   const [deleteTransaction] = useMutation(DELETE_TRANSACTION_MUTATION, {
     update(cache) {
@@ -58,6 +63,8 @@ const TransactionWithAccount = ({ transaction }) => {
   };
 
   const systemGenerated = transaction.payee.name == "Initial Value";
+
+  const filter = createFilterOptions();
 
   return (
     <tr className="border-t border-b border-dotted">
@@ -97,11 +104,56 @@ const TransactionWithAccount = ({ transaction }) => {
                 </select>
               </td>
               <td className="px-2">
-                <input
+                <Autocomplete
+                  freeSolo
                   className="ring ring-blue-500 rounded-sm"
-                  type="text"
-                  value={payee}
-                  onChange={(e) => setPayee(e.target.value)}
+                  size="small"
+                  options={payees}
+                  getOptionLabel={(option) => {
+                    // Value selected with enter, right from the input
+                    if (typeof option === "string") {
+                      return option;
+                    }
+                    // Add "xxx" option created dynamically
+                    if (option.inputValue) {
+                      return option.inputValue;
+                    }
+                    // Regular option
+                    return option.name;
+                  }}
+                  renderOption={(option) => option.name}
+                  style={{ width: "100%" }}
+                  onChange={(_, newValue) => {
+                    if (typeof newValue === "string") {
+                      setPayee(newValue);
+                    } else if (newValue && newValue.inputValue) {
+                      setPayee(newValue.inputValue);
+                    } else {
+                      setPayee(newValue.name);
+                    }
+                  }}
+                  filterOptions={(options, params) => {
+                    const filtered = filter(options, params);
+
+                    // Suggest the creation of a new value
+                    if (params.inputValue !== "") {
+                      filtered.push({
+                        inputValue: params.inputValue,
+                        name: `Add "${params.inputValue}"`,
+                      });
+                    }
+
+                    return filtered;
+                  }}
+                  renderInput={(params) => (
+                    <div ref={params.InputProps.ref}>
+                      <input
+                        style={{ width: "100%" }}
+                        type="text"
+                        {...params.inputProps}
+                      />
+                    </div>
+                  )}
                 />
               </td>
               <td className="px-2">

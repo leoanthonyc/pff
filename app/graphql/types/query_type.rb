@@ -67,5 +67,10 @@ module Types
                      end
       transactions.order(date: :desc)
     end
+
+    field :payees, [Types::PayeeType], null: false
+    def payees
+      Payee.all.order(:name)
+    end
   end
 end
