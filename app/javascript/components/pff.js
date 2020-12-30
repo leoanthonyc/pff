@@ -36,11 +36,11 @@ const Pff = () => {
         </div>
         <div className="flex-1 p-6">
           <Switch>
-            <Route path="/budget">
-              <CategoryGroups />
-            </Route>
             <Route path={`/accounts/:accountId`}>
               <Transactions />
+            </Route>
+            <Route path={["/", "/budget/:monthYear"]}>
+              <CategoryGroups />
             </Route>
           </Switch>
         </div>
