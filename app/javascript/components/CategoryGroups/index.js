@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@apollo/client";
-import { CATEGORY_GROUPS_QUERY } from "../../graphql/CategoryGroup";
 import CategoryGroup from "../CategoryGroup";
 import NewCategoryGroup from "./NewCategoryGroup";
+import useCategoryGroupsQuery from "../../utils/useCategoryGroupsQuery";
 import { getMonth } from "../../utils/date";
 
 const CategoryGroups = () => {
@@ -11,9 +10,14 @@ const CategoryGroups = () => {
   const [monthFilter, setMonthFilter] = useState(
     monthYear ?? new Date(new Date().setDate(1))
   );
-  const { data, loading, error } = useQuery(CATEGORY_GROUPS_QUERY);
-  if (loading) return <p>Loading categories...</p>;
-  if (error) return <p>Error :(</p>;
+
+  const {
+    categoryGroups,
+    categoryGroupsError,
+    categoryGroupsLoading,
+  } = useCategoryGroupsQuery();
+  if (categoryGroupsLoading) return <p>Loading categories...</p>;
+  if (categoryGroupsError) return <p>Error :(</p>;
 
   return (
     <div>
@@ -63,7 +67,7 @@ const CategoryGroups = () => {
           </tr>
         </thead>
         <tbody>
-          {(data.categoryGroups || []).map((categoryGroup) => (
+          {(categoryGroups || []).map((categoryGroup) => (
             <CategoryGroup
               key={categoryGroup.id}
               categoryGroup={categoryGroup}
