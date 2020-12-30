@@ -19,7 +19,7 @@ const CategoryGroups = () => {
     <div>
       <div className="p-2 flex justify-between bg-gray-200">
         <div className="flex">
-          <div className="px-1">
+          <div className="px-1 text-xl">
             <button
               type="button"
               onClick={() => {
@@ -33,8 +33,8 @@ const CategoryGroups = () => {
               &#8592;
             </button>
           </div>
-          <div className="text-lg font-bold">{getMonth(monthFilter)}</div>
-          <div className="px-1">
+          <div className="text-lg font-bold px-2">{getMonth(monthFilter)}</div>
+          <div className="px-1 text-xl">
             <button
               type="button"
               onClick={() => {
