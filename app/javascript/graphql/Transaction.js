@@ -27,7 +27,7 @@ export const TRANSACTIONS_QUERY = gql`
 export const SAVE_TRANSACTION_MUTATION = gql`
   mutation SaveTransaction(
     $id: ID
-    $date: String!
+    $date: ISO8601Date!
     $payee: String!
     $value: Int
     $categoryId: ID!
