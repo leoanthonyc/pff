@@ -7,7 +7,7 @@ import NewCategory from "../Categories/NewCategory";
 import Modal from "../Modal";
 import useDeleteCategoryGroupMutation from "../../utils/useDeleteCategoryGroupMutations";
 
-const CategoryGroup = ({ categoryGroup }) => {
+const CategoryGroup = ({ categoryGroup, transactions }) => {
   const [name, setName] = useState(categoryGroup.name);
   const [saveCategoryGroup] = useMutation(SAVE_CATEGORY_GROUP_MUTATION);
   const { deleteCategoryGroup } = useDeleteCategoryGroupMutation(categoryGroup);
@@ -27,6 +27,13 @@ const CategoryGroup = ({ categoryGroup }) => {
     setShow(false);
   };
 
+  const categoryGroupTransactions = useMemo(() => {
+    const categoryGroupCategoryIds = categoryGroup.categories.map((c) => c.id);
+    return transactions.filter((t) =>
+      categoryGroupCategoryIds.includes(t.category.id)
+    );
+  }, [categoryGroup, transactions]);
+
   const totalGoal = useMemo(() => {
     return categoryGroup.categories
       .map((c) => c.goal)
@@ -34,10 +41,11 @@ const CategoryGroup = ({ categoryGroup }) => {
   }, [categoryGroup]);
 
   const totalRemaining = useMemo(() => {
-    return categoryGroup.categories
-      .map((c) => c.remaining)
-      .reduce((acc, cv) => (acc = acc + cv), 0);
-  }, [categoryGroup]);
+    return (
+      totalGoal +
+      categoryGroupTransactions.reduce((acc, t) => (acc = acc + t.value), 0)
+    );
+  }, [categoryGroupTransactions]);
 
   const [show, setShow] = useState(false);
   const modalBody = (
@@ -122,6 +130,7 @@ const CategoryGroup = ({ categoryGroup }) => {
       <Categories
         categoryGroupId={categoryGroup.id}
         categories={categoryGroup.categories}
+        transactions={categoryGroupTransactions}
       />
     </>
   );

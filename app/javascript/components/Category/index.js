@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { useMutation } from "@apollo/client";
 import Modal from "../Modal";
 import { SAVE_CATEGORY_MUTATION } from "../../graphql/Category";
 import useDeleteCategoryMutation from "../../utils/useDeleteCategoryMutation";
 
-const Category = ({ category, categoryGroupId }) => {
+const Category = ({ category, categoryGroupId, transactions }) => {
   const [name, setName] = useState(category.name);
   const [goal, setGoal] = useState(category.goal);
   const [saveCategory] = useMutation(SAVE_CATEGORY_MUTATION);
@@ -32,6 +32,12 @@ const Category = ({ category, categoryGroupId }) => {
     setName(category.name);
     setShow(false);
   };
+
+  const currentValue = useMemo(() => {
+    return goal + transactions.reduce((acc, t) => (acc = acc + t.value), 0);
+  }, [transactions]);
+
+  console.log(transactions);
 
   const [show, setShow] = useState(false);
   const modalBody = (
@@ -92,12 +98,8 @@ const Category = ({ category, categoryGroupId }) => {
       <td className="px-2">{name}</td>
       <td className="px-2">{goal}</td>
       <td className="px-2">
-        <div
-          className={
-            category.remaining >= 0 ? "text-green-700" : "text-red-700"
-          }
-        >
-          {category.remaining}
+        <div className={currentValue >= 0 ? "text-green-700" : "text-red-700"}>
+          {currentValue}
         </div>
       </td>
       <td className="px-2">

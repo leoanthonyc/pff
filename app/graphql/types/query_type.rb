@@ -13,6 +13,18 @@ module Types
       'Hello World!'
     end
 
+    field :budget_overview, Types::BudgetOverviewType, null: false do
+      argument :month, GraphQL::Types::ISO8601Date, required: true
+    end
+    def budget_overview(month:)
+      month_start = month
+      month_end = month.end_of_month
+      {
+        category_groups: CategoryGroup.all.order(:created_at),
+        transactions: Transaction.where('date >= ? AND date <= ?', month_start, month_end)
+      }
+    end
+
     field :category_group, Types::CategoryGroupType, null: false do
       argument :id, ID, required: true
     end

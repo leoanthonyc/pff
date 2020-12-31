@@ -9,7 +9,6 @@ export const CATEGORY_GROUPS_QUERY = gql`
         id
         name
         goal
-        remaining
         categoryGroup {
           id
         }

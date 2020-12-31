@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import CategoryGroup from "../CategoryGroup";
 import NewCategoryGroup from "./NewCategoryGroup";
-import useCategoryGroupsQuery from "../../utils/useCategoryGroupsQuery";
-import { getMonth } from "../../utils/date";
+import { formatDate, getMonth } from "../../utils/date";
+import useBudgetOverviewQuery from "../../utils/useBudgetOverviewQuery";
 
 const CategoryGroups = () => {
   const { monthYear } = useParams();
@@ -13,11 +13,15 @@ const CategoryGroups = () => {
 
   const {
     categoryGroups,
-    categoryGroupsError,
-    categoryGroupsLoading,
-  } = useCategoryGroupsQuery();
-  if (categoryGroupsLoading) return <p>Loading categories...</p>;
-  if (categoryGroupsError) return <p>Error :(</p>;
+    transactions,
+    budgetOverviewLoading,
+    budgetOverviewError,
+  } = useBudgetOverviewQuery({
+    variables: { month: formatDate(monthFilter) },
+  });
+
+  if (budgetOverviewLoading) return <p>Loading ...</p>;
+  if (budgetOverviewError) return <p>Error :(</p>;
 
   return (
     <div>
@@ -71,6 +75,7 @@ const CategoryGroups = () => {
             <CategoryGroup
               key={categoryGroup.id}
               categoryGroup={categoryGroup}
+              transactions={transactions}
             />
           ))}
         </tbody>
