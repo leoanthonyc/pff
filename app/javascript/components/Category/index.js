@@ -34,10 +34,12 @@ const Category = ({ category, categoryGroupId, transactions }) => {
   };
 
   const currentValue = useMemo(() => {
-    return goal + transactions.reduce((acc, t) => (acc = acc + t.value), 0);
+    return transactions.reduce((acc, t) => (acc = acc + t.value), 0);
   }, [transactions]);
 
-  console.log(transactions);
+  const remainingBalance = useMemo(() => {
+    return goal + currentValue;
+  }, [transactions, currentValue]);
 
   const [show, setShow] = useState(false);
   const modalBody = (
@@ -97,9 +99,12 @@ const Category = ({ category, categoryGroupId, transactions }) => {
     <tr className="border-t border-b border-dotted">
       <td className="px-2">{name}</td>
       <td className="px-2">{goal}</td>
+      <td className="px-2">{currentValue}</td>
       <td className="px-2">
-        <div className={currentValue >= 0 ? "text-green-700" : "text-red-700"}>
-          {currentValue}
+        <div
+          className={remainingBalance >= 0 ? "text-green-700" : "text-red-700"}
+        >
+          {remainingBalance}
         </div>
       </td>
       <td className="px-2">

@@ -40,12 +40,16 @@ const CategoryGroup = ({ categoryGroup, transactions }) => {
       .reduce((acc, cv) => (acc = acc + cv), 0);
   }, [categoryGroup]);
 
-  const totalRemaining = useMemo(() => {
-    return (
-      totalGoal +
-      categoryGroupTransactions.reduce((acc, t) => (acc = acc + t.value), 0)
+  const totalValue = useMemo(() => {
+    return categoryGroupTransactions.reduce(
+      (acc, t) => (acc = acc + t.value),
+      0
     );
   }, [categoryGroupTransactions]);
+
+  const totalRemaining = useMemo(() => {
+    return totalGoal + totalValue;
+  }, [categoryGroupTransactions, totalValue]);
 
   const [show, setShow] = useState(false);
   const modalBody = (
@@ -94,15 +98,16 @@ const CategoryGroup = ({ categoryGroup, transactions }) => {
       <tr className="bg-gray-100 border-t border-b border-dotted">
         <td className="px-2">
           <div className="flex">
-            <div>
+            <div className="whitespace-nowrap">
               <strong>{name}</strong>
             </div>
-            <div className="pl-2">
+            <div className="pl-2 whitespace-nowrap">
               <NewCategory categoryGroupId={categoryGroup.id} />
             </div>
           </div>
         </td>
         <td className="px-2">{totalGoal}</td>
+        <td className="px-2">{totalValue}</td>
         <td className="px-2">
           <div
             className={totalRemaining >= 0 ? "text-green-700" : "text-red-700"}

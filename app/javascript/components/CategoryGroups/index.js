@@ -66,6 +66,7 @@ const CategoryGroups = () => {
           <tr>
             <th className="px-2">NAME</th>
             <th className="px-2">BUDGET</th>
+            <th className="px-2">ACTIVITY</th>
             <th className="px-2">AVAILABLE</th>
             <th className="px-2">ACTIONS</th>
           </tr>
