@@ -68,16 +68,26 @@ module Types
       Transaction.find(id)
     end
 
-    field :transactions, [Types::TransactionType], null: false do
+    field :transactions, Types::PagedTransactionsType, null: false do
       argument :account_id, ID, required: false
+      argument :page, Integer, required: false
     end
-    def transactions(account_id:)
+    DEFAULT_TRANSACTIONS_LIMIT = 30
+    def transactions(account_id:, page: 0)
+      offset = DEFAULT_TRANSACTIONS_LIMIT * page
       transactions = if account_id
                        Transaction.where(account_id: account_id)
                      else
                        Transaction.all
                      end
-      transactions.order(date: :desc)
+      {
+        page: page,
+        pages: transactions.size / DEFAULT_TRANSACTIONS_LIMIT,
+        transactions: transactions
+          .offset(offset)
+          .limit(DEFAULT_TRANSACTIONS_LIMIT)
+          .order(date: :desc)
+      }
     end
 
     field :payees, [Types::PayeeType], null: false

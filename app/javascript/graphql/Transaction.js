@@ -3,23 +3,27 @@ import { gql } from "@apollo/client";
 export const TRANSACTIONS_QUERY = gql`
   query Transactions($accountId: ID) {
     transactions(accountId: $accountId) {
-      id
-      date
-      value
-      payee {
+      page
+      pages
+      transactions {
         id
-        name
-      }
-      category {
-        id
-        name
-      }
-      account {
-        id
-        name
+        date
         value
+        payee {
+          id
+          name
+        }
+        category {
+          id
+          name
+        }
+        account {
+          id
+          name
+          value
+        }
+        note
       }
-      note
     }
   }
 `;

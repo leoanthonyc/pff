@@ -5,7 +5,7 @@ const useTransactionsQuery = ({ variables }) => {
   const { data, loading, error } = useQuery(TRANSACTIONS_QUERY, { variables });
 
   return {
-    transactions: data?.transactions ?? [],
+    transactions: data?.transactions?.transactions ?? [],
     transactionsLoading: loading,
     transactionError: error,
   };

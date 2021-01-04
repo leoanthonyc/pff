@@ -6,7 +6,7 @@ const useSaveTransactionMutation = () => {
     update(cache, { data: { saveTransaction } }) {
       cache.modify({
         fields: {
-          transactions(existingTransactions = []) {
+          transactions(existingTransactions = {}) {
             const newTransaction = cache.writeFragment({
               data: saveTransaction.transaction,
               fragment: gql`
@@ -30,7 +30,13 @@ const useSaveTransactionMutation = () => {
                 }
               `,
             });
-            return [newTransaction, ...existingTransactions];
+            return {
+              page: existingTransactions.page,
+              transactions: [
+                newTransaction,
+                ...existingTransactions.transactions,
+              ],
+            };
           },
         },
       });
