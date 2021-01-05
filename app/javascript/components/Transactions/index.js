@@ -6,13 +6,19 @@ import useTransactionsQuery from "../../utils/useTransactionsQuery";
 
 const Transactions = () => {
   const [newEntry, setNewEntry] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
   let { accountId } = useParams();
   const {
+    page,
+    pageTotal,
     transactions,
     transactionsError,
     transactionsLoading,
   } = useTransactionsQuery({
-    variables: { accountId: accountId !== "all" ? accountId : null },
+    variables: {
+      accountId: accountId !== "all" ? accountId : null,
+      page: currentPage,
+    },
   });
 
   const account = useMemo(
@@ -49,14 +55,57 @@ const Transactions = () => {
           </div>
         </div>
       </div>
-      <div className="py-2">
-        <button
-          className="border border-transparent hover:border-gray-300 py-0.5 px-2 rounded-md focus:bg-gray-300 focus:outline-none font-medium"
-          type="button"
-          onClick={() => setNewEntry(true)}
-        >
-          + New Transaction
-        </button>
+      <div className="flex justify-between">
+        <div className="py-2">
+          <button
+            className="border border-transparent hover:border-gray-300 py-0.5 px-2 rounded-md focus:bg-gray-300 focus:outline-none font-medium"
+            type="button"
+            onClick={() => setNewEntry(true)}
+          >
+            + New Transaction
+          </button>
+        </div>
+        <div>
+          <ul className="flex justify-end">
+            <li className="inline-block px-2">
+              <button
+                type="button"
+                disabled={currentPage === 0}
+                onClick={() => setCurrentPage(currentPage - 1)}
+                className="text-xl"
+              >
+                <span aria-hidden="true">&laquo;</span>
+              </button>
+            </li>
+            {Array(pageTotal)
+              .fill()
+              .map((_, i) => {
+                return (
+                  <li key={i} className="inline-block px-2">
+                    <button
+                      type="button"
+                      onClick={() => setCurrentPage(i)}
+                      className={
+                        currentPage === i ? "text-xl font-bold" : "text-lg"
+                      }
+                    >
+                      {i + 1}
+                    </button>
+                  </li>
+                );
+              })}
+            <li className="inline-block px-2">
+              <button
+                type="button"
+                disabled={currentPage === pageTotal - 1}
+                onClick={() => setCurrentPage(currentPage + 1)}
+                className="text-xl"
+              >
+                <span aria-hidden="true">&raquo;</span>
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
       <table className="table-fixed w-full shadow-lg text-left">
         <thead className="bg-gray-200 text-sm">
@@ -86,6 +135,9 @@ const Transactions = () => {
               transaction={transaction}
             />
           ))}
+          <tr>
+            <td className="w-full"></td>
+          </tr>
         </tbody>
       </table>
     </div>

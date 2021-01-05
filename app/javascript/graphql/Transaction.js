@@ -1,10 +1,10 @@
 import { gql } from "@apollo/client";
 
 export const TRANSACTIONS_QUERY = gql`
-  query Transactions($accountId: ID) {
-    transactions(accountId: $accountId) {
+  query Transactions($accountId: ID, $page: Int) {
+    transactions(accountId: $accountId, page: $page) {
       page
-      pages
+      pageTotal
       transactions {
         id
         date

@@ -72,7 +72,7 @@ module Types
       argument :account_id, ID, required: false
       argument :page, Integer, required: false
     end
-    DEFAULT_TRANSACTIONS_LIMIT = 30
+    DEFAULT_TRANSACTIONS_LIMIT = 25
     def transactions(account_id:, page: 0)
       offset = DEFAULT_TRANSACTIONS_LIMIT * page
       transactions = if account_id
@@ -82,7 +82,7 @@ module Types
                      end
       {
         page: page,
-        pages: transactions.size / DEFAULT_TRANSACTIONS_LIMIT,
+        page_total: (transactions.size.to_f / DEFAULT_TRANSACTIONS_LIMIT).ceil,
         transactions: transactions
           .offset(offset)
           .limit(DEFAULT_TRANSACTIONS_LIMIT)
