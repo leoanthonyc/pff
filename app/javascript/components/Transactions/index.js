@@ -3,34 +3,20 @@ import { useParams } from "react-router-dom";
 import NewTransaction from "./NewTransaction";
 import Transaction from "../Transaction";
 import useTransactionsQuery from "../../utils/useTransactionsQuery";
+import useAccountQuery from "../../utils/useAccountQuery";
 
 const Transactions = () => {
   const [newEntry, setNewEntry] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   let { accountId } = useParams();
-  const {
-    page,
-    pageTotal,
-    transactions,
-    transactionsTotal,
-    transactionsError,
-    transactionsLoading,
-  } = useTransactionsQuery({
+
+  const { account } = useAccountQuery({ variables: { id: accountId } });
+  const { pageTotal, transactions, transactionsError } = useTransactionsQuery({
     variables: {
       accountId: accountId !== "all" ? accountId : null,
       page: currentPage,
     },
   });
-
-  const account = useMemo(
-    () =>
-      accountId !== "all"
-        ? transactions[0]?.account
-        : {
-            name: "All",
-          },
-    [transactions]
-  );
 
   const showAccount = useMemo(() => (accountId === "all" ? true : false), [
     transactions,
@@ -39,19 +25,18 @@ const Transactions = () => {
   useEffect(() => setNewEntry(false), [accountId]);
 
   if (transactionsError) return <div> Error loading transactions :( </div>;
-  if (transactionsLoading) return <div> Loading transactions ... </div>;
 
   return (
     <div>
       <div className="p-2 flex justify-between bg-gray-200">
         <div className="flex">
-          <div className="text-lg font-bold mr-2">{account.name}</div>
+          <div className="text-lg font-bold mr-2">{account?.name ?? "All"}</div>
           <div
             className={`
             text-xl font-bold
-            ${transactionsTotal > 0 ? "text-green-600" : "text-red-600"}`}
+            ${account?.value > 0 ? "text-green-600" : "text-red-600"}`}
           >
-            {transactionsTotal}
+            {account?.value}
           </div>
         </div>
       </div>
@@ -72,7 +57,7 @@ const Transactions = () => {
                 type="button"
                 disabled={currentPage === 0}
                 onClick={() => setCurrentPage(currentPage - 1)}
-                className="text-xl"
+                className="text-xl focus:outline-none"
               >
                 <span aria-hidden="true">&laquo;</span>
               </button>
@@ -86,7 +71,9 @@ const Transactions = () => {
                       type="button"
                       onClick={() => setCurrentPage(i)}
                       className={
-                        currentPage === i ? "text-xl font-bold" : "text-lg"
+                        currentPage === i
+                          ? "text-lg font-bold focus:outline-none"
+                          : "text-lg focus:outline-none"
                       }
                     >
                       {i + 1}
@@ -99,7 +86,7 @@ const Transactions = () => {
                 type="button"
                 disabled={currentPage === pageTotal - 1}
                 onClick={() => setCurrentPage(currentPage + 1)}
-                className="text-xl"
+                className="text-xl focus:outline-none"
               >
                 <span aria-hidden="true">&raquo;</span>
               </button>
@@ -123,7 +110,7 @@ const Transactions = () => {
         <tbody>
           {newEntry && (
             <NewTransaction
-              accountId={account.id ?? null}
+              accountId={account?.id || undefined}
               showAccount={showAccount}
               onClose={() => setNewEntry(false)}
             />

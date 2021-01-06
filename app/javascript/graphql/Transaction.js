@@ -24,7 +24,6 @@ export const TRANSACTIONS_QUERY = gql`
         }
         note
       }
-      transactionsTotal
     }
   }
 `;

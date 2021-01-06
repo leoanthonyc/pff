@@ -6,6 +6,5 @@ module Types
     field :page, Integer, null: false
     field :page_total, Integer, null: false
     field :transactions, [TransactionType], null: false
-    field :transactions_total, Integer, null: false
   end
 end

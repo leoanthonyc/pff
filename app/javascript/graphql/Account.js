@@ -1,5 +1,15 @@
 import { gql } from "@apollo/client";
 
+export const ACCOUNT_QUERY = gql`
+  query Account($id: ID!) {
+    account(id: $id) {
+      id
+      name
+      value
+    }
+  }
+`;
+
 export const ACCOUNTS_QUERY = gql`
   query Accounts {
     accounts {

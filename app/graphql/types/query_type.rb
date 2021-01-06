@@ -53,7 +53,15 @@ module Types
       argument :id, ID, required: true
     end
     def account(id:)
-      Account.find(id)
+      if id == 'all'
+        OpenStruct.new.tap do |o|
+          o.id = 'All'
+          o.name = 'All'
+          o.transactions = Transaction.all
+        end
+      else
+        Account.find(id)
+      end
     end
 
     field :accounts, [Types::AccountType], null: false
@@ -86,8 +94,7 @@ module Types
         transactions: transactions
           .offset(offset)
           .limit(DEFAULT_TRANSACTIONS_LIMIT)
-          .order(date: :desc),
-        transactions_total: transactions.pluck(:value).sum
+          .order(date: :desc)
       }
     end
 

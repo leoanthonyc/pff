@@ -14,13 +14,11 @@ const CategoryGroups = () => {
   const {
     categoryGroups,
     transactions,
-    budgetOverviewLoading,
     budgetOverviewError,
   } = useBudgetOverviewQuery({
     variables: { month: formatDate(monthFilter) },
   });
 
-  if (budgetOverviewLoading) return <p>Loading ...</p>;
   if (budgetOverviewError) return <p>Error :(</p>;
 
   return (
@@ -30,6 +28,7 @@ const CategoryGroups = () => {
           <div className="px-1 text-xl">
             <button
               type="button"
+              className="focus:outline-none"
               onClick={() => {
                 const currentMonth = monthFilter.getMonth();
                 const prevMonth = new Date(
@@ -41,10 +40,19 @@ const CategoryGroups = () => {
               &#8592;
             </button>
           </div>
-          <div className="text-lg font-bold px-2">{getMonth(monthFilter)}</div>
+          <div className="text-lg font-bold px-2">
+            <button
+              type="button"
+              className="focus:outline-none"
+              onClick={() => setMonthFilter(new Date(new Date().setDate(1)))}
+            >
+              {getMonth(monthFilter)}
+            </button>
+          </div>
           <div className="px-1 text-xl">
             <button
               type="button"
+              className="focus:outline-none"
               onClick={() => {
                 const currentMonth = monthFilter.getMonth();
                 const nextMonth = new Date(
@@ -72,7 +80,7 @@ const CategoryGroups = () => {
           </tr>
         </thead>
         <tbody>
-          {(categoryGroups || []).map((categoryGroup) => (
+          {categoryGroups.map((categoryGroup) => (
             <CategoryGroup
               key={categoryGroup.id}
               categoryGroup={categoryGroup}
