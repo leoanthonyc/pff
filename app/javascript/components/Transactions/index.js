@@ -12,6 +12,7 @@ const Transactions = () => {
     page,
     pageTotal,
     transactions,
+    transactionsTotal,
     transactionsError,
     transactionsLoading,
   } = useTransactionsQuery({
@@ -27,7 +28,6 @@ const Transactions = () => {
         ? transactions[0]?.account
         : {
             name: "All",
-            value: transactions.reduce((sum, t) => (sum += t.value), 0),
           },
     [transactions]
   );
@@ -49,9 +49,9 @@ const Transactions = () => {
           <div
             className={`
             text-xl font-bold
-            ${account.value > 0 ? "text-green-600" : "text-red-600"}`}
+            ${transactionsTotal > 0 ? "text-green-600" : "text-red-600"}`}
           >
-            {account.value}
+            {transactionsTotal}
           </div>
         </div>
       </div>

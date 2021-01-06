@@ -10,6 +10,7 @@ const useTransactionsQuery = ({ variables }) => {
     page: data?.transactions?.page ?? 0,
     pageTotal: data?.transactions?.pageTotal ?? 0,
     transactions: data?.transactions?.transactions ?? [],
+    transactionsTotal: data?.transactions?.transactionsTotal ?? 0,
     transactionsLoading: loading,
     transactionError: error,
   };

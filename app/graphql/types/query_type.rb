@@ -86,7 +86,8 @@ module Types
         transactions: transactions
           .offset(offset)
           .limit(DEFAULT_TRANSACTIONS_LIMIT)
-          .order(date: :desc)
+          .order(date: :desc),
+        transactions_total: transactions.pluck(:value).sum
       }
     end
 
