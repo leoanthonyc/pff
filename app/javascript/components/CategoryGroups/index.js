@@ -43,7 +43,7 @@ const CategoryGroups = () => {
           <div className="text-lg font-bold px-2">
             <button
               type="button"
-              className="focus:outline-none"
+              className="focus:outline-none uppercase font-bold"
               onClick={() => setMonthFilter(new Date(new Date().setDate(1)))}
             >
               {getMonth(monthFilter)}
