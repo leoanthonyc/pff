@@ -55,8 +55,8 @@ module Types
     def account(id:)
       if id == 'all'
         OpenStruct.new.tap do |o|
-          o.id = 'All'
-          o.name = 'All'
+          o.id = 0
+          o.name = 'All Accounts'
           o.transactions = Transaction.all
         end
       else
