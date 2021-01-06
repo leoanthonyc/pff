@@ -9,6 +9,7 @@ const Transactions = () => {
   const [newEntry, setNewEntry] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   let { accountId } = useParams();
+  console.log({ currentPage });
 
   const { account } = useAccountQuery({ variables: { id: accountId } });
   const { pageTotal, transactions, transactionsError } = useTransactionsQuery({
@@ -22,7 +23,10 @@ const Transactions = () => {
     transactions,
   ]);
 
-  useEffect(() => setNewEntry(false), [accountId]);
+  useEffect(() => {
+    setNewEntry(false);
+    setCurrentPage(0);
+  }, [accountId]);
 
   if (transactionsError) return <div> Error loading transactions :( </div>;
 
