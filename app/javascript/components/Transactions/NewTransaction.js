@@ -45,7 +45,7 @@ const NewTransaction = ({ accountId, showAccount, onClose }) => {
   }, [categoryGroups]);
 
   useEffect(() => {
-    setSelectedAccount(accounts[0]?.id);
+    selectedAccount === "" && setSelectedAccount(accounts[0]?.id);
   }, [accounts]);
 
   const filter = createFilterOptions();

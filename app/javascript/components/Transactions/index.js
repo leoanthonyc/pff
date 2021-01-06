@@ -110,7 +110,7 @@ const Transactions = () => {
         <tbody>
           {newEntry && (
             <NewTransaction
-              accountId={account?.id || undefined}
+              accountId={accountId !== "all" ? accountId : ""}
               showAccount={showAccount}
               onClose={() => setNewEntry(false)}
             />
