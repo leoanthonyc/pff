@@ -51,7 +51,7 @@ const Transactions = () => {
           </button>
         </div>
         <div>
-          <ul className="flex justify-end">
+          <ul className="flex justify-end py-2">
             <li className="inline-block px-2">
               <button
                 type="button"

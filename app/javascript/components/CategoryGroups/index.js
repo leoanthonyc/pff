@@ -66,7 +66,7 @@ const CategoryGroups = () => {
           </div>
         </div>
       </div>
-      <div className="pb-2">
+      <div className="py-2">
         <NewCategoryGroup />
       </div>
       <table className="table-fixed w-full shadow-lg text-left">
