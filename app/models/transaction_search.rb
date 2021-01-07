@@ -9,11 +9,11 @@ class TransactionSearch
   option(:account_id) { |scope, value| value ? scope.where(account_id: value) : scope }
 
   option(:query) do |scope, value|
-    if value
+    if downcased_value = value&.downcase
       scope
         .joins(:payee)
         .joins(:category)
-        .where("payees.name LIKE '%#{value}%' OR categories.name LIKE '%#{value}%'")
+        .where("LOWER(payees.name) LIKE '%#{downcased_value}%' OR LOWER(categories.name) LIKE '%#{downcased_value}%'")
     else
       scope
     end
