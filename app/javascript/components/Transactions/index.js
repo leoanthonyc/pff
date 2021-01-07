@@ -9,7 +9,6 @@ const Transactions = () => {
   const [newEntry, setNewEntry] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   let { accountId } = useParams();
-  console.log({ currentPage });
 
   const { account } = useAccountQuery({ variables: { id: accountId } });
   const { pageTotal, transactions, transactionsError } = useTransactionsQuery({
