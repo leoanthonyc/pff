@@ -98,10 +98,10 @@ const CategoryGroup = ({ categoryGroup, transactions }) => {
       <tr className="bg-gray-100 border-t border-b border-dotted">
         <td className="px-2">
           <div className="flex">
-            <div className="whitespace-nowrap">
+            <div className="">
               <strong>{name}</strong>
             </div>
-            <div className="pl-2 whitespace-nowrap">
+            <div className="pl-2 text-sm">
               <NewCategory categoryGroupId={categoryGroup.id} />
             </div>
           </div>
