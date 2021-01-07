@@ -10,7 +10,10 @@ class TransactionSearch
 
   option(:query) do |scope, value|
     if value
-      scope.joins(:payee).where("payees.name LIKE '%#{value}%'")
+      scope
+        .joins(:payee)
+        .joins(:category)
+        .where("payees.name LIKE '%#{value}%' OR categories.name LIKE '%#{value}%'")
     else
       scope
     end
