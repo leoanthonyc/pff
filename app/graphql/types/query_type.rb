@@ -79,22 +79,24 @@ module Types
     field :transactions, Types::PagedTransactionsType, null: false do
       argument :account_id, ID, required: false
       argument :page, Integer, required: false
+      argument :query, String, required: false
     end
     DEFAULT_TRANSACTIONS_LIMIT = 25
-    def transactions(account_id:, page: 0)
+    def transactions(account_id: nil, page: 0, query: '')
       offset = DEFAULT_TRANSACTIONS_LIMIT * page
-      transactions = if account_id
-                       Transaction.where(account_id: account_id)
-                     else
-                       Transaction.all
-                     end
+      transactions = TransactionSearch.new(
+        filters: {
+          account_id: account_id,
+          query: query,
+          sort: 'date desc'
+        }
+      ).results
       {
         page: page,
         page_total: (transactions.size.to_f / DEFAULT_TRANSACTIONS_LIMIT).ceil,
         transactions: transactions
           .offset(offset)
           .limit(DEFAULT_TRANSACTIONS_LIMIT)
-          .order(date: :desc)
       }
     end
 

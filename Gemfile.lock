@@ -156,6 +156,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    search_object (1.2.4)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
@@ -213,6 +214,7 @@ DEPENDENCIES
   puma (~> 4.1)
   rails
   sass-rails (>= 6)
+  search_object
   selenium-webdriver
   spring
   spring-watcher-listen (~> 2.0.0)
