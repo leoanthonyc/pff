@@ -8,6 +8,7 @@ import useAccountQuery from "../../utils/useAccountQuery";
 const Transactions = () => {
   const [newEntry, setNewEntry] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [query, setQuery] = useState("");
   let { accountId } = useParams();
 
   const { account } = useAccountQuery({ variables: { id: accountId } });
@@ -15,6 +16,7 @@ const Transactions = () => {
     variables: {
       accountId: accountId !== "all" ? accountId : null,
       page: currentPage,
+      query,
     },
   });
 
@@ -44,7 +46,7 @@ const Transactions = () => {
         </div>
       </div>
       <div className="flex justify-between">
-        <div className="py-2">
+        <div className="py-2 w-1/4">
           <button
             className="border border-transparent hover:border-gray-300 py-0.5 px-2 rounded-md focus:bg-gray-300 focus:outline-none font-medium"
             type="button"
@@ -53,7 +55,16 @@ const Transactions = () => {
             + New Transaction
           </button>
         </div>
-        <div>
+        <div className="py-2 w-2/4">
+          <input
+            className="px-1 border border-gray-300 rounded-md focus:outline-none w-3/4"
+            type="search"
+            placeholder="search for payees, cateogries and notes"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </div>
+        <div className="w-1/4">
           <ul className="flex justify-end py-2">
             <li className="inline-block px-2">
               <button
