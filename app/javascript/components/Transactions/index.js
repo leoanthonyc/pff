@@ -59,7 +59,7 @@ const Transactions = () => {
           <input
             className="px-1 border border-gray-300 rounded-md focus:outline-none w-3/4"
             type="search"
-            placeholder="search for payees, cateogries and notes"
+            placeholder="search for payees, categories and notes"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
