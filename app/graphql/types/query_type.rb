@@ -83,19 +83,14 @@ module Types
     end
     DEFAULT_TRANSACTIONS_LIMIT = 25
     def transactions(account_id: nil, page: 0, query: '')
-      offset = DEFAULT_TRANSACTIONS_LIMIT * page
       transactions = TransactionSearch.new(
-        filters: {
-          account_id: account_id,
-          query: query,
-          sort: 'date desc'
-        }
+        filters: { account_id: account_id, query: query, sort: 'date desc' }
       ).results
       {
         page: page,
         page_total: (transactions.size.to_f / DEFAULT_TRANSACTIONS_LIMIT).ceil,
         transactions: transactions
-          .offset(offset)
+          .offset(DEFAULT_TRANSACTIONS_LIMIT * page)
           .limit(DEFAULT_TRANSACTIONS_LIMIT)
       }
     end
