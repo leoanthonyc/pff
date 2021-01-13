@@ -90,6 +90,7 @@ const TransactionWithoutAccount = ({ transaction }) => {
                   className="ring ring-blue-500 rounded-sm"
                   size="small"
                   options={payees}
+                  value={payee}
                   getOptionLabel={(option) => {
                     // Value selected with enter, right from the input
                     if (typeof option === "string") {
