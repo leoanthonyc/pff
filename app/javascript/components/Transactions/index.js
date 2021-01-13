@@ -16,7 +16,7 @@ const Transactions = () => {
     variables: {
       accountId: accountId !== "all" ? accountId : null,
       page: currentPage,
-      query,
+      query: query.length >= 3 ? query : "",
     },
   });
 
